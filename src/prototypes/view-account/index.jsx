@@ -201,11 +201,10 @@ const ViewAccountPrototype = () => {
   }, [activeTab, users, subAccounts, auditEntries, campaigns, tickets, invoices]);
 
   return (
-    <div className="va-app" data-screen-label="Account view">
+    <div className="va va-shell" data-screen-label="Account view">
       <TopBar />
-      <div className="va-app__body">
-        <SideNav />
-        <main className="va-main">
+      <SideNav />
+      <main className="va-main">
           <PageHead onDelete={()=>setOpenModal("delete")} />
           <TopOptionB
             data={{ user, manager, region, billingAddress, lowBalance, mfa, system, paymentMethods }}
@@ -214,7 +213,6 @@ const ViewAccountPrototype = () => {
           <TabStrip tabs={TABS} active={activeTab} onChange={setActiveTab}/>
           {tabContent}
         </main>
-      </div>
 
       {/* ===== Modals ===== */}
       <EditUserModal open={openModal === "editUser"} onClose={close}
