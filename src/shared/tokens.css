@@ -1,0 +1,199 @@
+/* ============================================================
+   Stannp Design System — Colors & Typography tokens
+   Source of truth: Figma "Components Library" (Page-2)
+   ============================================================ */
+
+/* Poppins loaded via Google Fonts in index.css */
+
+:root {
+  /* ---------- Brand palette ---------- */
+  --stannp-indigo:      #415DE5;  /* Primary brand — 215× */
+  --stannp-indigo-deep: #162988;  /*  deeper accent / text on yellow */
+  --stannp-blue:        #3F8EFC;  /* Secondary blue */
+  --stannp-blue-2:      #87BFFF;  /* Light supporting blue */
+  --stannp-blue-3:      #C8E5F9;  /* Pale supporting blue */
+  --stannp-yellow:      #FCB91D;  /* Brand yellow — 179× */
+  --stannp-yellow-2:    #FCC41D;  /* Amber tint */
+  --stannp-yellow-3:    #FC9B1D;  /* Warm amber */
+
+  /* ---------- Status colours (alerts/statuses) ---------- */
+  --stannp-green:   #02B680;
+  --stannp-red:     #E8432A;
+  --stannp-orange:  #FF6900;
+
+  /* ---------- Neutrals ---------- */
+  --stannp-ink:          #222222;   /* Near-black, 666× — primary text */
+  --stannp-ink-2:        #212121;   /* Alt body */
+  --stannp-ink-3:        #1F1F1F;   /* Very dark */
+  --stannp-muted:        #777777;   /* Secondary text */
+  --stannp-disabled:     #BBBBBB;   /* Disabled text */
+  --stannp-border:       #E5E5E5;
+  --stannp-border-2:     #ECECEC;
+  --stannp-border-3:     #E9E9E9;
+  --stannp-surface:      #FFFFFF;
+  --stannp-surface-2:    #EEEEEE;
+  --stannp-surface-3:    #F6F7FE;   /* pale indigo wash — card hover/selected */
+  --stannp-indigo-tint:  #D4DAF9;   /* selected indigo tint */
+  --stannp-indigo-tint-2:#CDD4F8;
+
+  /* ---------- Semantic foreground/background ---------- */
+  --fg-1: var(--stannp-ink);
+  --fg-2: #4C4C4C;
+  --fg-3: var(--stannp-muted);
+  --fg-disabled: var(--stannp-disabled);
+  --fg-on-brand: #FFFFFF;
+  --fg-on-yellow: var(--stannp-indigo-deep);
+
+  --bg-1: #FFFFFF;
+  --bg-2: #FAFAFB;
+  --bg-3: var(--stannp-surface-3);
+  --bg-brand: var(--stannp-indigo);
+  --bg-yellow: var(--stannp-yellow);
+
+  /* ---------- Accents / shadows ---------- */
+  --accent: var(--stannp-indigo);
+  --accent-hover: #384CB1;
+  --accent-active: #3B4B9B;
+  --accent-subtle: var(--stannp-surface-3);
+
+  /* ---------- Radii (from Figma: 5, 6, 8, 10, 25 pill) ---------- */
+  --radius-xs: 4px;
+  --radius-sm: 5px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-pill: 9999px;
+
+  /* ---------- Elevation ---------- */
+  --shadow-sm: 0 1px 2px rgba(34,34,34,0.06);
+  --shadow-md: 0 6px 18px rgba(34,34,34,0.08), 0 1px 2px rgba(34,34,34,0.04);
+  --shadow-lg: 0 14px 40px rgba(34,34,34,0.10), 0 2px 4px rgba(34,34,34,0.04);
+  --shadow-card: 0 2px 8px rgba(236,236,236,0.50);   /* Figma card shadow */
+  --shadow-focus: 0 0 0 3px rgba(65,93,229,0.22);
+
+  /* ---------- Spacing scale (px — 4/8 based) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 30px;   /* Figma row gap */
+  --space-8: 40px;
+  --space-9: 60px;
+  --space-10: 80px;
+
+  /* ---------- Typography ---------- */
+  --font-sans: "Poppins", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Base body text comes from Figma: Poppins Regular 14–16 @ 100% line-height is very tight.
+     For UI bodies we relax line-height slightly for readability. */
+  --text-xs:   12px;
+  --text-sm:   14px;   /* default UI body — 209 occurrences */
+  --text-base: 15px;
+  --text-md:   16px;   /* buttons, table rows */
+  --text-lg:   18px;
+  --text-xl:   20px;   /* section titles, H2 sub-headers */
+  --text-2xl:  24px;
+  --text-3xl:  30px;   /* H1 page title */
+  --text-4xl:  48px;
+  --text-5xl:  80px;   /* Homepage hero */
+
+  --lh-tight: 1;
+  --lh-snug:  1.2;
+  --lh-normal:1.4;
+  --lh-relaxed:1.55;
+
+  --tracking-tight: -0.03em;  /* Figma H1/title */
+  --tracking-tighter: -0.04em;
+  --tracking-normal: 0;
+}
+
+/* ---------- Semantic typography presets ---------- */
+
+.t-hero {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-5xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+}
+
+.t-h1 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+}
+
+.t-h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  line-height: var(--lh-tight);
+  color: var(--fg-1);
+}
+
+.t-h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--text-md);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+
+.t-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg-1);
+}
+
+.t-body-lg {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-1);
+}
+
+.t-label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  line-height: var(--lh-snug);
+  color: var(--fg-2);
+}
+
+.t-caption {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-xs);
+  line-height: var(--lh-snug);
+  color: var(--fg-3);
+}
+
+.t-button {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--text-md);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+}
+
+.t-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+/* ---------- Base ---------- */
+html, body { font-family: var(--font-sans); color: var(--fg-1); background: var(--bg-1); }
+*, *::before, *::after { box-sizing: border-box; }
