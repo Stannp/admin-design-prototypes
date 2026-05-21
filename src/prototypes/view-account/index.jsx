@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 
+import ScenarioBar from '../../shell/ScenarioBar';
 import TopBar from '../../shell/TopBar';
 import SideNav from '../../shell/SideNav';
 import PageHead from '../../shell/PageHead';
@@ -201,7 +202,9 @@ const ViewAccountPrototype = () => {
   }, [activeTab, users, subAccounts, auditEntries, campaigns, tickets, invoices]);
 
   return (
-    <div className="va va-shell" data-screen-label="Account view">
+    <div className="va" data-screen-label="Account view">
+      <ScenarioBar note="Account detail page — admin view with tabs, modals, and audit log" />
+      <div className="va-shell">
       <TopBar />
       <SideNav />
       <main className="va-main">
@@ -213,6 +216,7 @@ const ViewAccountPrototype = () => {
           <TabStrip tabs={TABS} active={activeTab} onChange={setActiveTab}/>
           {tabContent}
         </main>
+      </div>
 
       {/* ===== Modals ===== */}
       <EditUserModal open={openModal === "editUser"} onClose={close}
