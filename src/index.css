@@ -1,4 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
-@import "./shared/tokens.css";
-@import "./shared/admin.css";
+
+@theme {
+  --font-sans: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Dark surfaces */
+  --color-d-bg: #0B0B0C;
+  --color-d-bg-2: #131316;
+  --color-d-card: #18181B;
+  --color-d-card-2: #1F1F23;
+  --color-d-card-hover: #222227;
+  --color-d-border: #26262B;
+  --color-d-border-2: #2E2E34;
+
+  /* Dark foreground */
+  --color-d-fg: #F5F5F6;
+  --color-d-fg-2: #C7C7CC;
+  --color-d-fg-3: #8E8E93;
+  --color-d-fg-4: #5C5C63;
+
+  /* Brand */
+  --color-indigo: #415DE5;
+  --color-indigo-deep: #162988;
+  --color-indigo-hover: #384CB1;
+  --color-yellow: #FCB91D;
+  --color-green: #02B680;
+  --color-red: #E8432A;
+  --color-orange: #FF6900;
+
+  /* Dark status tints */
+  --color-d-green-bg: rgba(2, 182, 128, 0.14);
+  --color-d-green-fg: #34D399;
+  --color-d-red-bg: rgba(232, 67, 42, 0.16);
+  --color-d-red-fg: #F87171;
+  --color-d-yellow-bg: rgba(252, 185, 29, 0.18);
+  --color-d-yellow-fg: #FBBF24;
+  --color-d-indigo-bg: rgba(65, 93, 229, 0.18);
+  --color-d-indigo-fg: #818CF8;
+  --color-d-orange-bg: rgba(255, 105, 0, 0.16);
+  --color-d-orange-fg: #FB923C;
+  --color-d-neutral-bg: #2A2A30;
+  --color-d-neutral-fg: #C7C7CC;
+}
+
+/* Keyframe animations */
+@keyframes va-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes va-modal-in {
+  from { transform: translateY(8px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes va-toast-in {
+  from { transform: translate(-50%, 16px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}

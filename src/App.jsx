@@ -16,13 +16,11 @@ function StatusPill({ status }) {
   const s = STATUS_STYLES[status];
   if (!s) return null;
   return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: 6,
-      font: "700 10px/1 Poppins", letterSpacing: "0.04em", textTransform: "uppercase",
-      color: s.fg, background: s.bg,
-      padding: "4px 10px", borderRadius: 999,
-    }}>
-      <span style={{ width: 6, height: 6, borderRadius: 999, background: s.dot }} />
+    <span
+      className="inline-flex items-center gap-1.5 font-sans font-bold text-[10px] leading-none tracking-[0.04em] uppercase px-2.5 py-1 rounded-full"
+      style={{ color: s.fg, background: s.bg }}
+    >
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.dot }} />
       {s.label}
     </span>
   );
@@ -30,67 +28,48 @@ function StatusPill({ status }) {
 
 function PrototypePicker() {
   return (
-    <div className="va" style={{
-      minHeight: "100vh", background: "var(--d-bg)",
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-      fontFamily: "Poppins, sans-serif", padding: 32,
-    }}>
-      <div style={{
-        width: 38, height: 38, borderRadius: 6, background: "#FCB91D",
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-        transform: "skewX(-8deg)", fontWeight: 900, fontStyle: "italic",
-        color: "#fff", fontSize: 22, marginBottom: 16,
-        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-      }}>S</div>
-      <h1 style={{ margin: "0 0 8px", fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em", color: "var(--d-fg)" }}>
+    <div className="min-h-screen bg-d-bg flex flex-col items-center justify-center font-sans p-8">
+      <div className="w-[38px] h-[38px] rounded-md bg-yellow inline-flex items-center justify-center -skew-x-[8deg] font-black italic text-white text-[22px] mb-4 shadow-[0_2px_6px_rgba(0,0,0,0.15)]">
+        S
+      </div>
+      <h1 className="m-0 mb-2 text-[28px] font-bold tracking-tight text-d-fg">
         Admin Prototypes
       </h1>
-      <p style={{ color: "var(--d-fg-3)", margin: "0 0 32px", fontSize: 14 }}>
+      <p className="text-d-fg-3 m-0 mb-8 text-sm">
         Filament admin panel design explorations
       </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, width: "100%", maxWidth: 640 }}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 w-full max-w-[640px]">
         {prototypes.map(P => (
-          <Link key={P.meta.id} to={P.meta.path} style={{
-            background: "var(--d-card)", border: "1px solid var(--d-border)", borderRadius: 12,
-            padding: 24, textDecoration: "none", color: "inherit",
-            transition: "all .15s", display: "flex", flexDirection: "column",
-          }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--stannp-indigo)"; e.currentTarget.style.background = "var(--d-card-2)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--d-border)"; e.currentTarget.style.background = "var(--d-card)"; }}
+          <Link
+            key={P.meta.id}
+            to={P.meta.path}
+            className="bg-d-card border border-d-border rounded-xl p-6 no-underline text-inherit transition-all flex flex-col hover:border-indigo hover:bg-d-card-2"
           >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-              <div style={{
-                width: 36, height: 36, borderRadius: 8,
-                background: "var(--d-card-2)", color: "var(--d-fg-2)",
-                display: "inline-flex", alignItems: "center", justifyContent: "center",
-              }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-9 h-9 rounded-lg bg-d-card-2 text-d-fg-2 inline-flex items-center justify-center">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h4a1 1 0 0 1 1 1v11M8 7h.01M8 11h.01M8 15h.01M12 7h.01M12 11h.01M12 15h.01" />
                 </svg>
               </div>
               {P.meta.status && <StatusPill status={P.meta.status} />}
             </div>
-            <h3 style={{ margin: "0 0 4px", fontSize: 16, fontWeight: 700, color: "var(--d-fg)" }}>{P.meta.label}</h3>
-            <p style={{ margin: 0, fontSize: 13, color: "var(--d-fg-3)", flex: 1 }}>
+            <h3 className="m-0 mb-1 text-base font-bold text-d-fg">{P.meta.label}</h3>
+            <p className="m-0 text-[13px] text-d-fg-3 flex-1">
               {P.meta.description}
             </p>
-            <div style={{ marginTop: 12, font: "600 13px/1 Poppins", color: "var(--stannp-indigo)" }}>
+            <div className="mt-3 font-sans font-semibold text-[13px] leading-none text-indigo">
               Open prototype →
             </div>
           </Link>
         ))}
       </div>
-      <div style={{
-        display: "flex", alignItems: "center", gap: 20, marginTop: 32,
-        padding: "14px 20px", background: "var(--d-card)", borderRadius: 10,
-        border: "1px solid var(--d-border)",
-      }}>
-        <span style={{ font: "600 10px/1 Poppins", color: "var(--d-fg-3)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Status key</span>
+      <div className="flex items-center gap-5 mt-8 px-5 py-3.5 bg-d-card rounded-[10px] border border-d-border">
+        <span className="font-sans font-semibold text-[10px] leading-none text-d-fg-3 tracking-[0.08em] uppercase">Status key</span>
         {Object.entries(STATUS_STYLES).map(([id, s]) => (
-          <div key={id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <span style={{ width: 6, height: 6, borderRadius: 999, background: s.dot }} />
-            <span style={{ font: "600 11px/1 Poppins", color: s.fg }}>{s.label}</span>
-            <span style={{ font: "400 11px/1 Poppins", color: "var(--d-fg-4)" }}>{s.desc}</span>
+          <div key={id} className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.dot }} />
+            <span className="font-sans font-semibold text-[11px] leading-none" style={{ color: s.fg }}>{s.label}</span>
+            <span className="font-sans font-normal text-[11px] leading-none text-d-fg-4">{s.desc}</span>
           </div>
         ))}
       </div>

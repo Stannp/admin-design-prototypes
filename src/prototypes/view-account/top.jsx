@@ -25,12 +25,12 @@ const TopOptionB = ({ data, openModal }) => {
     [a.line1, a.line2, [a.city, a.postcode].filter(Boolean).join(" "), a.country].filter(Boolean);
 
   return (
-    <div className="va-stack">
+    <div className="flex flex-col gap-4">
       {/* ===== Hero summary ===== */}
-      <div className="va-summary-card">
+      <div className="relative bg-d-card border border-d-border rounded-[14px] px-7 py-[26px] flex flex-col gap-5">
         {/* UK flag — top right */}
-        <span className="va-flag" title={region}>
-          <span className="va-flag__icon">
+        <span className="absolute top-6 right-7 inline-flex items-center gap-2 text-[12.5px] text-d-fg-3" title={region}>
+          <span className="w-7 h-5 rounded-[3px] overflow-hidden shadow-[0_0_0_1px_var(--color-d-border)] shrink-0">
             <svg viewBox="0 0 60 30" width="100%" height="100%">
               <clipPath id="ukclip"><rect width="60" height="30"/></clipPath>
               <rect width="60" height="30" fill="#012169"/>
@@ -47,113 +47,113 @@ const TopOptionB = ({ data, openModal }) => {
 
         <div>
           {/* One-line subtitle: IDs, manager, source, created — no more bar of details below */}
-          <div className="va-hero-sub">
-            <span className="va-hero-sub__id">Account #{system.accountId}</span>
-            <span className="va-hero-sub__dot">&middot;</span>
+          <div className="flex items-center flex-wrap gap-x-2.5 gap-y-1.5 text-[12.5px] text-d-fg-3 mb-2">
+            <span className="tabular-nums text-d-fg-2">Account #{system.accountId}</span>
+            <span className="text-d-fg-4">&middot;</span>
             <span>HubSpot</span>
-            <a href="#" className="va-hero-sub__link">{system.hubspotId} &nearr;</a>
-            <span className="va-hero-sub__dot">&middot;</span>
-            <span>Managed by <span style={{color:"var(--d-fg-2)"}}>{manager}</span></span>
-            <span className="va-hero-sub__dot">&middot;</span>
-            <span>Source <span style={{color:"var(--d-fg-2)"}}>{system.source}</span></span>
-            <span className="va-hero-sub__dot">&middot;</span>
+            <a href="#" className="text-d-indigo-fg no-underline tabular-nums hover:text-[#6e80ed]">{system.hubspotId} &nearr;</a>
+            <span className="text-d-fg-4">&middot;</span>
+            <span>Managed by <span className="text-d-fg-2">{manager}</span></span>
+            <span className="text-d-fg-4">&middot;</span>
+            <span>Source <span className="text-d-fg-2">{system.source}</span></span>
+            <span className="text-d-fg-4">&middot;</span>
             <span>Created 19 May 2026</span>
           </div>
 
-          <h2 className="va-summary-card__title" style={{marginBottom: 12}}>
+          <h2 className="text-[26px] font-bold tracking-tight text-d-fg m-0 mb-3">
             Vivid Design Services Ltd.
           </h2>
-          <div className="va-summary-card__pills">
-            <span className="va-pill va-pill--green va-pill--dot">Paid</span>
-            <span className="va-pill">Legacy</span>
-            <span className="va-pill va-pill--yellow">Dashboard v2</span>
-            {system.priorityQC && <span className="va-pill va-pill--indigo">Priority QC</span>}
+          <div className="flex flex-wrap gap-1.5">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Paid</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Legacy</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-yellow-bg text-d-yellow-fg">Dashboard v2</span>
+            {system.priorityQC && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-indigo-bg text-d-indigo-fg">Priority QC</span>}
           </div>
         </div>
 
         {/* Balance / spend block — populated with realistic numbers */}
-        <div className="va-bal-block">
-          <div className="va-bal-block__cell">
-            <span className="va-bal-block__label">Current Balance</span>
-            <span className="va-bal-block__value">&pound;1,425.20</span>
-            <span className="va-bal-block__sub">Credit allowance &pound;500.00</span>
+        <div className="grid grid-cols-[1.2fr_1fr_1fr] gap-6 pt-4.5 border-t border-d-border">
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[11px] font-semibold text-d-fg-3 uppercase tracking-[0.05em]">Current Balance</span>
+            <span className="text-[28px] font-bold tracking-tight text-d-fg">&pound;1,425.20</span>
+            <span className="text-[12.5px] text-d-fg-3">Credit allowance &pound;500.00</span>
           </div>
-          <div className="va-bal-block__cell">
-            <span className="va-bal-block__label">Total spent</span>
-            <span className="va-bal-block__value va-bal-block__value--mid va-value--green">&pound;18,742.50</span>
-            <span className="va-bal-block__sub">Lifetime &middot; 142 campaigns</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[11px] font-semibold text-d-fg-3 uppercase tracking-[0.05em]">Total spent</span>
+            <span className="text-[22px] font-bold tracking-tight text-green">&pound;18,742.50</span>
+            <span className="text-[12.5px] text-d-fg-3">Lifetime &middot; 142 campaigns</span>
           </div>
-          <div className="va-bal-block__cell">
-            <span className="va-bal-block__label">Last 30 days</span>
-            <span className="va-bal-block__value va-bal-block__value--mid">&pound;842.00</span>
-            <span className="va-bal-block__sub">4 campaigns &middot; avg &pound;210.50</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[11px] font-semibold text-d-fg-3 uppercase tracking-[0.05em]">Last 30 days</span>
+            <span className="text-[22px] font-bold tracking-tight text-d-fg">&pound;842.00</span>
+            <span className="text-[12.5px] text-d-fg-3">4 campaigns &middot; avg &pound;210.50</span>
           </div>
         </div>
       </div>
 
       {/* ===== 3-column row: management cards ===== */}
-      <div className="va-cards-3">
+      <div className="grid grid-cols-[1.15fr_1fr_1fr] gap-4 items-start">
 
         {/* Primary user — with Edit, Change primary, Reset Password, Manage MFA */}
-        <div className="va-aside-card">
-          <div className="va-card__head" style={{marginBottom: 14}}>
-            <span className="va-card__icon">
+        <div className="bg-d-card border border-d-border rounded-[14px] px-6 py-[22px]">
+          <div className="relative flex items-center gap-2.5 text-d-fg mb-3.5">
+            <span className="w-7 h-7 rounded-md inline-flex items-center justify-center bg-d-card-2 text-d-fg-2">
               <VaIcon name="user" size={16}/>
             </span>
-            <span className="va-card__title">Primary user</span>
-            <div className="va-card__head-actions">
-              <button className="va-edit-btn" onClick={()=>openModal("editUser")}>
+            <span className="text-[15px] font-semibold text-d-fg">Primary user</span>
+            <div className="ml-auto inline-flex gap-1">
+              <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-xs font-medium font-sans px-2.5 py-1.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2" onClick={()=>openModal("editUser")}>
                 <VaIcon name="edit" size={12}/>
                 Edit
               </button>
             </div>
           </div>
-          <div className="va-aside-list">
-            <div className="va-aside-row">
-              <span className="va-aside-row__label">Name</span>
-              <span className="va-aside-row__value">{user.name}</span>
+          <div className="flex flex-col gap-3.5">
+            <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Name</span>
+              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">{user.name}</span>
             </div>
-            <div className="va-aside-row">
-              <span className="va-aside-row__label">Email</span>
-              <span className="va-aside-row__value">{user.email}</span>
+            <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Email</span>
+              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">{user.email}</span>
             </div>
-            <div className="va-aside-row">
-              <span className="va-aside-row__label">Phone</span>
-              <span className="va-aside-row__value">{user.phone || <span style={{color:"var(--d-fg-3)"}}>Not set</span>}</span>
+            <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Phone</span>
+              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">{user.phone || <span className="text-d-fg-3">Not set</span>}</span>
             </div>
-            <div className="va-aside-row">
-              <span className="va-aside-row__label">Contact prefs</span>
-              <span className="va-aside-row__value" style={{display:"flex", gap: 4, flexWrap:"wrap", justifyContent:"flex-end"}}>
-                {user.prefs.product && <span className="va-pill">Product</span>}
-                {user.prefs.marketing && <span className="va-pill">Marketing</span>}
-                {user.prefs.account && <span className="va-pill">Account</span>}
+            <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Contact prefs</span>
+              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0 flex gap-1 flex-wrap justify-end">
+                {user.prefs.product && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Product</span>}
+                {user.prefs.marketing && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Marketing</span>}
+                {user.prefs.account && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Account</span>}
                 {!user.prefs.product && !user.prefs.marketing && !user.prefs.account &&
-                  <span style={{color:"var(--d-fg-3)", fontSize: 12.5}}>None</span>}
+                  <span className="text-d-fg-3 text-[12.5px]">None</span>}
               </span>
             </div>
-            <div className="va-aside-row">
-              <span className="va-aside-row__label">MFA</span>
-              <span className="va-aside-row__value">
+            <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">MFA</span>
+              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">
                 {mfa.enabled
-                  ? <span className="va-pill va-pill--green va-pill--dot">Enabled</span>
-                  : <span className="va-pill va-pill--off">Not enabled</span>}
+                  ? <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Enabled</span>
+                  : <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-fg-3">Not enabled</span>}
               </span>
             </div>
-            <div className="va-aside-row">
-              <span className="va-aside-row__label">Last login</span>
-              <span className="va-aside-row__value" style={{color:"var(--d-fg-2)"}}>{user.lastLogin}</span>
+            <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Last login</span>
+              <span className="text-[13.5px] text-d-fg-2 font-medium text-right min-w-0">{user.lastLogin}</span>
             </div>
           </div>
-          <div style={{display:"flex", gap: 8, marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--d-border)", flexWrap: "wrap"}}>
-            <button className="va-btn va-btn--ghost va-btn--sm" onClick={()=>openModal("changePrimary")}>
+          <div className="flex gap-2 mt-4 pt-4 border-t border-d-border flex-wrap">
+            <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("changePrimary")}>
               <VaIcon name="user" size={13}/>
               Change primary user
             </button>
-            <button className="va-btn va-btn--ghost va-btn--sm" onClick={()=>openModal("resetPw")}>
+            <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("resetPw")}>
               <VaIcon name="key" size={13}/>
               Reset password
             </button>
-            <button className="va-btn va-btn--ghost va-btn--sm" onClick={()=>openModal("mfa")}>
+            <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("mfa")}>
               <VaIcon name="shield" size={13}/>
               Manage MFA
             </button>
@@ -161,22 +161,21 @@ const TopOptionB = ({ data, openModal }) => {
         </div>
 
         {/* Billing settings — now with payment method examples */}
-        <div className="va-aside-card">
-          <div className="va-card__head" style={{marginBottom: 14}}>
-            <span className="va-card__icon">
+        <div className="bg-d-card border border-d-border rounded-[14px] px-6 py-[22px]">
+          <div className="relative flex items-center gap-2.5 text-d-fg mb-3.5">
+            <span className="w-7 h-7 rounded-md inline-flex items-center justify-center bg-d-card-2 text-d-fg-2">
               <VaIcon name="money" size={16}/>
             </span>
-            <span className="va-card__title">Billing settings</span>
+            <span className="text-[15px] font-semibold text-d-fg">Billing settings</span>
           </div>
 
-          <div className="va-meta-row">
-            <span className="va-meta-row__label" style={{alignSelf:"flex-start", paddingTop: 2}}>Billing address</span>
-            <span className="va-meta-row__value" style={{flexDirection:"column", alignItems:"flex-end", gap: 2, textAlign:"right"}}>
+          <div className="flex items-center justify-between gap-3 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+            <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0 self-start pt-0.5">Billing address</span>
+            <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0 break-all flex items-center gap-2 flex-col items-end">
               {formatAddress(billingAddress).map((line, i) => (
-                <span key={i} style={{fontSize: 13, lineHeight: 1.4}}>{line}</span>
+                <span key={i} className="text-[13px] leading-snug">{line}</span>
               ))}
-              <button className="va-edit-btn va-edit-btn--inline"
-                style={{marginTop: 4, opacity: 1}}
+              <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2 mt-1"
                 onClick={()=>openModal("billingAddress")}>
                 <VaIcon name="edit" size={11}/>
                 Edit
@@ -184,14 +183,13 @@ const TopOptionB = ({ data, openModal }) => {
             </span>
           </div>
 
-          <div className="va-meta-row">
-            <span className="va-meta-row__label" style={{alignSelf:"flex-start", paddingTop: 2}}>Low balance</span>
-            <span className="va-meta-row__value" style={{flexDirection:"column", alignItems:"flex-end", gap: 4}}>
+          <div className="flex items-center justify-between gap-3 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
+            <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0 self-start pt-0.5">Low balance</span>
+            <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0 break-all flex items-center gap-2 flex-col items-end gap-1">
               {lowBalance.enabled
-                ? <span style={{fontSize: 13}}>Auto top-up <strong>{lowBalance.topUpAmount}</strong> at {lowBalance.threshold}</span>
-                : <span style={{fontSize: 13, color:"var(--d-fg-3)"}}>Disabled — account pauses at &pound;0</span>}
-              <button className="va-edit-btn va-edit-btn--inline"
-                style={{opacity: 1}}
+                ? <span className="text-[13px]">Auto top-up <strong>{lowBalance.topUpAmount}</strong> at {lowBalance.threshold}</span>
+                : <span className="text-[13px] text-d-fg-3">Disabled — account pauses at &pound;0</span>}
+              <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2"
                 onClick={()=>openModal("lowBalance")}>
                 <VaIcon name="edit" size={11}/>
                 Edit
@@ -200,25 +198,29 @@ const TopOptionB = ({ data, openModal }) => {
           </div>
 
           {/* Payment methods — show actual cards */}
-          <div style={{paddingTop: 14, borderTop: "1px solid var(--d-border)", marginTop: 4}}>
-            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom: 10}}>
-              <span style={{fontSize: 12.5, color: "var(--d-fg-3)", fontWeight: 500}}>Payment methods</span>
-              <button className="va-edit-btn va-edit-btn--inline" style={{opacity: 1}}>
+          <div className="pt-3.5 border-t border-d-border mt-1">
+            <div className="flex justify-between items-center mb-2.5">
+              <span className="text-[12.5px] text-d-fg-3 font-medium">Payment methods</span>
+              <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">
                 <VaIcon name="plus" size={11}/>
                 Add card
               </button>
             </div>
-            <div style={{display:"flex", flexDirection:"column", gap: 6}}>
+            <div className="flex flex-col gap-1.5">
               {paymentMethods.length === 0 ? (
-                <div style={{fontSize: 13, color:"var(--d-fg-3)", padding:"8px 10px"}}>No cards on file</div>
+                <div className="text-[13px] text-d-fg-3 px-2.5 py-2">No cards on file</div>
               ) : paymentMethods.map((pm, i) => (
-                <div className="va-pm" key={i}>
-                  <span className={"va-pm__brand va-pm__brand--" + pm.brand.toLowerCase()}>
+                <div className="flex items-center gap-2.5 px-2.5 py-2 bg-d-bg-2 border border-d-border rounded-lg" key={i}>
+                  <span className={`w-9 h-6 rounded inline-flex items-center justify-center text-[9px] font-bold tracking-[0.04em] shrink-0 ${
+                    pm.brand.toLowerCase() === 'visa' ? 'bg-[#1A1F71] text-white' :
+                    pm.brand.toLowerCase() === 'mc' ? 'bg-gradient-to-r from-[#EB001B] to-[#F79E1B] text-white' :
+                    'bg-d-card-2 text-d-fg-2'
+                  }`}>
                     {pm.brand.toUpperCase()}
                   </span>
-                  <span className="va-pm__num">&bull;&bull;&bull;&bull; {pm.last4}</span>
-                  <span className="va-pm__exp">{pm.exp}</span>
-                  {pm.default && <span className="va-pm__default">Default</span>}
+                  <span className="text-[13px] font-medium text-d-fg tabular-nums flex-1">&bull;&bull;&bull;&bull; {pm.last4}</span>
+                  <span className="text-xs text-d-fg-3 tabular-nums">{pm.exp}</span>
+                  {pm.default && <span className="text-[10px] font-semibold text-d-green-fg bg-d-green-bg px-[7px] py-0.5 rounded-full uppercase tracking-[0.04em]">Default</span>}
                 </div>
               ))}
             </div>
@@ -226,50 +228,50 @@ const TopOptionB = ({ data, openModal }) => {
         </div>
 
         {/* Plan limits — now in the 3rd column, stacked */}
-        <div className="va-aside-card">
-          <div className="va-card__head" style={{marginBottom: 16}}>
-            <span className="va-card__icon">
+        <div className="bg-d-card border border-d-border rounded-[14px] px-6 py-[22px]">
+          <div className="relative flex items-center gap-2.5 text-d-fg mb-4">
+            <span className="w-7 h-7 rounded-md inline-flex items-center justify-center bg-d-card-2 text-d-fg-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="9"/><path d="M12 12L19 5"/>
               </svg>
             </span>
-            <span className="va-card__title">Plan limits</span>
-            <div className="va-card__head-actions">
-              <button className="va-edit-btn">Manage</button>
+            <span className="text-[15px] font-semibold text-d-fg">Plan limits</span>
+            <div className="ml-auto inline-flex gap-1">
+              <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-xs font-medium font-sans px-2.5 py-1.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Manage</button>
             </div>
           </div>
-          <div className="va-card__sub" style={{marginTop: -8, marginBottom: 18}}>
+          <div className="text-d-fg-3 text-[12.5px] -mt-2 mb-4.5">
             Legacy plan &middot; API 300/min
           </div>
-          <div className="va-limits-column">
-            <div className="va-limit">
-              <div className="va-limit__head">
-                <span className="va-limit__label">Users</span>
-                <span className="va-limit__count">3<em> / 3</em></span>
+          <div className="flex flex-col gap-4.5">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between">
+                <span className="text-xs font-medium text-d-fg-3">Users</span>
+                <span className="text-sm font-semibold text-d-fg">3<span className="text-d-fg-3 not-italic font-medium"> / 3</span></span>
               </div>
-              <div className="va-bar"><div className="va-bar__fill va-bar__fill--warn" style={{width: "100%"}}></div></div>
+              <div className="relative h-1.5 rounded-full bg-d-card-2 overflow-hidden"><div className="absolute inset-y-0 left-0 rounded-full bg-yellow" style={{width: "100%"}}></div></div>
             </div>
-            <div className="va-limit">
-              <div className="va-limit__head">
-                <span className="va-limit__label">Templates</span>
-                <span className="va-limit__count">4<em> / 10</em></span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between">
+                <span className="text-xs font-medium text-d-fg-3">Templates</span>
+                <span className="text-sm font-semibold text-d-fg">4<span className="text-d-fg-3 not-italic font-medium"> / 10</span></span>
               </div>
-              <div className="va-bar"><div className="va-bar__fill" style={{width: "40%"}}></div></div>
+              <div className="relative h-1.5 rounded-full bg-d-card-2 overflow-hidden"><div className="absolute inset-y-0 left-0 rounded-full bg-green" style={{width: "40%"}}></div></div>
             </div>
-            <div className="va-limit">
-              <div className="va-limit__head">
-                <span className="va-limit__label">Journeys</span>
-                <span className="va-limit__count">2<em> / 10</em></span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between">
+                <span className="text-xs font-medium text-d-fg-3">Journeys</span>
+                <span className="text-sm font-semibold text-d-fg">2<span className="text-d-fg-3 not-italic font-medium"> / 10</span></span>
               </div>
-              <div className="va-bar"><div className="va-bar__fill" style={{width: "20%"}}></div></div>
+              <div className="relative h-1.5 rounded-full bg-d-card-2 overflow-hidden"><div className="absolute inset-y-0 left-0 rounded-full bg-green" style={{width: "20%"}}></div></div>
             </div>
-            <div className="va-limit">
-              <div className="va-limit__head">
-                <span className="va-limit__label">Recipients</span>
-                <span className="va-limit__count">12,408<em> reached</em></span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between">
+                <span className="text-xs font-medium text-d-fg-3">Recipients</span>
+                <span className="text-sm font-semibold text-d-fg">12,408<span className="text-d-fg-3 not-italic font-medium"> reached</span></span>
               </div>
-              <div className="va-bar"><div className="va-bar__fill va-bar__fill--neutral" style={{width: "62%"}}></div></div>
+              <div className="relative h-1.5 rounded-full bg-d-card-2 overflow-hidden"><div className="absolute inset-y-0 left-0 rounded-full bg-indigo" style={{width: "62%"}}></div></div>
             </div>
           </div>
         </div>

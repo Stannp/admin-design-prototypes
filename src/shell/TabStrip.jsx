@@ -17,10 +17,10 @@ const TAB_ICONS = {
 };
 
 const TabStrip = ({ tabs, active, onChange }) => (
-  <div className="va-tabs">
+  <div className="flex flex-wrap gap-1 bg-d-card border border-d-border p-1.5 rounded-xl mt-7 mb-5">
     {tabs.map((t) => (
       <span key={t}
-        className={"va-tab" + (t === active ? " va-tab--active" : "")}
+        className={"inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-[13px] font-medium cursor-pointer whitespace-nowrap transition-colors" + (t === active ? " bg-d-card-2 text-d-fg" : " text-d-fg-3 hover:text-d-fg")}
         onClick={()=>onChange && onChange(t)}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

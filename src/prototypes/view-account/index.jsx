@@ -202,12 +202,12 @@ const ViewAccountPrototype = () => {
   }, [activeTab, users, subAccounts, auditEntries, campaigns, tickets, invoices]);
 
   return (
-    <div className="va" data-screen-label="Account view">
+    <div className="font-sans text-d-fg bg-d-bg antialiased" data-screen-label="Account view">
       <ScenarioBar note="Account detail page — admin view with tabs, modals, and audit log" />
-      <div className="va-shell">
+      <div className="grid grid-cols-[264px_1fr] min-h-full bg-d-bg">
       <TopBar />
       <SideNav />
-      <main className="va-main">
+      <main className="px-8 pt-6 pb-10">
           <PageHead onDelete={()=>setOpenModal("delete")} />
           <TopOptionB
             data={{ user, manager, region, billingAddress, lowBalance, mfa, system, paymentMethods }}

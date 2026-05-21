@@ -33,60 +33,74 @@ const VaIcon = ({ name, size = 18, color = "currentColor", stroke = 1.75 }) => {
 const Modal = ({ open, onClose, icon, iconVariant, title, subtitle, children, footer, width = 560 }) => {
   if (!open) return null;
   return ReactDOM.createPortal(
-    <div className="va va-modal-backdrop" onClick={onClose}>
-      <div className="va-modal" style={{ maxWidth: width }} onClick={e=>e.stopPropagation()}>
-        <header className="va-modal__head">
+    <div className="font-sans text-d-fg antialiased fixed inset-0 z-[100] bg-black/55 backdrop-blur-md flex items-start justify-center pt-16 px-6 pb-6 overflow-y-auto animate-[va-fade-in_0.14s_ease-out]" onClick={onClose}>
+      <div className="bg-d-card border border-d-border-2 rounded-[14px] w-full shadow-[0_24px_64px_rgba(0,0,0,0.4)] flex flex-col overflow-hidden animate-[va-modal-in_0.18s_cubic-bezier(.2,.7,.3,1)]" style={{ maxWidth: width }} onClick={e=>e.stopPropagation()}>
+        <header className="flex items-start gap-4 px-6 pt-[22px] pb-4 border-b border-d-border">
           {icon && (
-            <div className={"va-modal__head-icon" + (iconVariant === "danger" ? " va-modal__head-icon--danger" : "")}>
+            <div className={`shrink-0 w-10 h-10 rounded-lg inline-flex items-center justify-center ${iconVariant === "danger" ? "bg-d-red-bg text-d-red-fg" : "bg-d-card-2 text-d-fg-2"}`}>
               <VaIcon name={icon} size={18}/>
             </div>
           )}
-          <div className="va-modal__head-text">
-            <h2 className="va-modal__title">{title}</h2>
-            {subtitle && <p className="va-modal__sub">{subtitle}</p>}
+          <div className="flex-1 min-w-0">
+            <h2 className="m-0 text-[17px] font-semibold text-d-fg">{title}</h2>
+            {subtitle && <p className="mt-1 mb-0 text-[13px] text-d-fg-3 leading-snug">{subtitle}</p>}
           </div>
-          <button className="va-modal__close" onClick={onClose} aria-label="Close">
+          <button className="shrink-0 w-8 h-8 rounded-md bg-transparent border-none cursor-pointer text-d-fg-3 inline-flex items-center justify-center hover:bg-d-card-2 hover:text-d-fg" onClick={onClose} aria-label="Close">
             <VaIcon name="x" size={16}/>
           </button>
         </header>
-        <div className="va-modal__body">{children}</div>
-        {footer && <footer className="va-modal__foot">{footer}</footer>}
+        <div className="px-6 py-[22px] flex flex-col gap-4">{children}</div>
+        {footer && <footer className="px-6 py-4 border-t border-d-border flex items-center justify-between gap-3">{footer}</footer>}
       </div>
     </div>,
     document.body
   );
 };
 
-const ModalFooter = ({ onCancel, onConfirm, confirmLabel = "Save changes", confirmVariant = "indigo", disabled, secondaryLeft }) => (
-  <>
-    {secondaryLeft && <div className="va-modal__foot-left">{secondaryLeft}</div>}
-    <div className="va-modal__foot-right">
-      <button className="va-btn va-btn--ghost" onClick={onCancel}>Cancel</button>
-      <button className={"va-btn va-btn--" + confirmVariant} disabled={disabled} onClick={onConfirm}>
-        {confirmLabel}
-      </button>
-    </div>
-  </>
-);
+const ModalFooter = ({ onCancel, onConfirm, confirmLabel = "Save changes", confirmVariant = "indigo", disabled, secondaryLeft }) => {
+  const variantMap = {
+    indigo: "bg-indigo text-white hover:bg-indigo-hover",
+    danger: "bg-red text-white hover:brightness-110",
+  };
+  return (
+    <>
+      {secondaryLeft && <div className="text-d-fg-3 text-[12.5px]">{secondaryLeft}</div>}
+      <div className="flex gap-2.5 ml-auto">
+        <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-[13.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={onCancel}>Cancel</button>
+        <button className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-[13.5px] border border-transparent cursor-pointer transition-[filter,background] ${variantMap[confirmVariant]} disabled:bg-d-card-2 disabled:text-d-fg-4 disabled:cursor-not-allowed disabled:border-d-border`} disabled={disabled} onClick={onConfirm}>
+          {confirmLabel}
+        </button>
+      </div>
+    </>
+  );
+};
 
 // ===== Field helpers =====
 const Field = ({ label, hint, children }) => (
-  <div className="va-field">
-    {label && <label className="va-field__label">{label}</label>}
+  <div className="flex flex-col gap-1.5">
+    {label && <label className="text-xs font-semibold text-d-fg-2">{label}</label>}
     {children}
-    {hint && <span className="va-field__hint">{hint}</span>}
+    {hint && <span className="text-xs text-d-fg-3">{hint}</span>}
   </div>
 );
-const Input = (props) => <input className="va-input" {...props}/>;
-const Select = ({ children, ...props }) => <select className="va-select" {...props}>{children}</select>;
+const Input = (props) => <input className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-[13.5px] w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20" {...props}/>;
+const Select = ({ children, ...props }) => (
+  <select
+    className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-[13.5px] w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20 appearance-none bg-no-repeat bg-[right_12px_center] pr-9"
+    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")` }}
+    {...props}
+  >
+    {children}
+  </select>
+);
 const Checkbox = ({ checked, onChange, label, hint }) => (
-  <div className={"va-checkbox" + (checked ? " va-checkbox--checked" : "")} onClick={()=>onChange && onChange(!checked)}>
-    <span className="va-checkbox__box">
+  <div className="flex items-start gap-2.5 py-2.5 cursor-pointer" onClick={()=>onChange && onChange(!checked)}>
+    <span className={`shrink-0 w-4.5 h-4.5 rounded border inline-flex items-center justify-center transition-colors ${checked ? "bg-indigo border-indigo text-white" : "border-d-border-2 bg-d-bg-2 text-transparent"}`}>
       <VaIcon name="check" size={12} stroke={2.4}/>
     </span>
     <div>
-      <div className="va-checkbox__text">{label}</div>
-      {hint && <div className="va-checkbox__hint">{hint}</div>}
+      <div className="text-[13.5px] text-d-fg leading-snug">{label}</div>
+      {hint && <div className="text-xs text-d-fg-3 mt-0.5">{hint}</div>}
     </div>
   </div>
 );
@@ -116,14 +130,14 @@ export const EditUserModal = ({ open, onClose, onSave, user }) => {
           onCancel={()=>setStep("edit")}
           onConfirm={()=>{ onSave({ name, email, phone, prefs }); onClose(); }}
           confirmLabel="Confirm and save"/>}>
-        <div className="va-readout">
-          {name !== user.name && <div className="va-readout__row"><span className="va-readout__label">Name</span><span className="va-readout__value">{user.name} &rarr; {name}</span></div>}
-          {email !== user.email && <div className="va-readout__row"><span className="va-readout__label">Email</span><span className="va-readout__value">{user.email} &rarr; {email}</span></div>}
-          {phone !== user.phone && <div className="va-readout__row"><span className="va-readout__label">Phone</span><span className="va-readout__value">{user.phone || "\u2014"} &rarr; {phone}</span></div>}
+        <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
+          {name !== user.name && <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Name</span><span className="text-d-fg font-medium">{user.name} &rarr; {name}</span></div>}
+          {email !== user.email && <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Email</span><span className="text-d-fg font-medium">{user.email} &rarr; {email}</span></div>}
+          {phone !== user.phone && <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Phone</span><span className="text-d-fg font-medium">{user.phone || "\u2014"} &rarr; {phone}</span></div>}
           {Object.keys(prefs).map(k => prefs[k] !== user.prefs[k] && (
-            <div className="va-readout__row" key={k}>
-              <span className="va-readout__label">{k}</span>
-              <span className="va-readout__value">{user.prefs[k] ? "On" : "Off"} &rarr; {prefs[k] ? "On" : "Off"}</span>
+            <div className="flex justify-between gap-4 text-[13px]" key={k}>
+              <span className="text-d-fg-3">{k}</span>
+              <span className="text-d-fg font-medium">{user.prefs[k] ? "On" : "Off"} &rarr; {prefs[k] ? "On" : "Off"}</span>
             </div>
           ))}
         </div>
@@ -148,7 +162,7 @@ export const EditUserModal = ({ open, onClose, onSave, user }) => {
         <Input type="tel" value={phone} onChange={e=>setPhone(e.target.value)}/>
       </Field>
       <Field label="Contact preferences">
-        <div style={{display:"flex", flexDirection:"column", gap: 4}}>
+        <div className="flex flex-col gap-1">
           <Checkbox checked={prefs.product} onChange={()=>togglePref("product")} label="Product updates" hint="New features, breaking changes, scheduled maintenance"/>
           <Checkbox checked={prefs.marketing} onChange={()=>togglePref("marketing")} label="Marketing & offers" hint="Promotional emails about new plans and add-ons"/>
           <Checkbox checked={prefs.account} onChange={()=>togglePref("account")} label="Account & billing" hint="Invoices, payment receipts, balance alerts"/>
@@ -167,9 +181,9 @@ export const ResetPasswordModal = ({ open, onClose, onConfirm, email }) => (
     subtitle="The user will receive a secure link to set a new password. The link expires in 24 hours."
     footer={<ModalFooter onCancel={onClose} onConfirm={onConfirm}
       confirmLabel="Send reset email" confirmVariant="indigo"/>}>
-    <div className="va-readout">
-      <div className="va-readout__row"><span className="va-readout__label">Recipient</span><span className="va-readout__value">{email}</span></div>
-      <div className="va-readout__row"><span className="va-readout__label">Action</span><span className="va-readout__value">Force password reset on next login</span></div>
+    <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
+      <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Recipient</span><span className="text-d-fg font-medium">{email}</span></div>
+      <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Action</span><span className="text-d-fg font-medium">Force password reset on next login</span></div>
     </div>
   </Modal>
 );
@@ -189,19 +203,19 @@ export const ManageMfaModal = ({ open, onClose, onSave, mfa }) => {
       footer={<ModalFooter onCancel={onClose}
         onConfirm={()=>{ onSave({ enabled, reset }); onClose(); }}
         confirmLabel="Apply MFA settings"/>}>
-      <div className="va-readout">
-        <div className="va-readout__row">
-          <span className="va-readout__label">Current status</span>
-          <span className="va-readout__value">
+      <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
+        <div className="flex justify-between gap-4 text-[13px]">
+          <span className="text-d-fg-3">Current status</span>
+          <span className="text-d-fg font-medium">
             {mfa.enabled
-              ? <span className="va-pill va-pill--green va-pill--dot">Enabled</span>
-              : <span className="va-pill va-pill--off">Not enabled</span>}
+              ? <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Enabled</span>
+              : <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-fg-3">Not enabled</span>}
           </span>
         </div>
         {mfa.enabled && (
-          <div className="va-readout__row">
-            <span className="va-readout__label">Last verified</span>
-            <span className="va-readout__value">{mfa.lastVerified}</span>
+          <div className="flex justify-between gap-4 text-[13px]">
+            <span className="text-d-fg-3">Last verified</span>
+            <span className="text-d-fg font-medium">{mfa.lastVerified}</span>
           </div>
         )}
       </div>
@@ -270,7 +284,7 @@ export const EditBillingAddressModal = ({ open, onClose, onSave, address }) => {
       <Field label="Address line 2 (optional)">
         <Input value={a.line2} onChange={e=>set("line2", e.target.value)}/>
       </Field>
-      <div className="va-field-grid">
+      <div className="grid grid-cols-2 gap-3.5">
         <Field label="City">
           <Input value={a.city} onChange={e=>set("city", e.target.value)}/>
         </Field>
@@ -357,23 +371,23 @@ export const DeleteAccountModal = ({ open, onClose, onConfirm, accountName, bloc
 
       {hasBlockers ? (
         <>
-          <div className="va-danger-callout">
-            <span className="va-danger-callout__icon"><VaIcon name="warn" size={20}/></span>
+          <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[10px] px-4 py-3.5 flex gap-3">
+            <span className="shrink-0 text-d-red-fg"><VaIcon name="warn" size={20}/></span>
             <div>
-              <h3 className="va-danger-callout__title">{blockers.length} blocker{blockers.length === 1 ? "" : "s"} found</h3>
-              <p className="va-danger-callout__body">All blockers must be cleared before this account can be deleted. Contact accounts@stannp.com if you need help unwinding any of these.</p>
+              <h3 className="text-[13.5px] font-semibold text-d-red-fg m-0 mb-1">{blockers.length} blocker{blockers.length === 1 ? "" : "s"} found</h3>
+              <p className="text-[12.5px] text-d-fg-2 m-0 leading-normal">All blockers must be cleared before this account can be deleted. Contact accounts@stannp.com if you need help unwinding any of these.</p>
             </div>
           </div>
-          <div className="va-blockers">
+          <div className="flex flex-col gap-2">
             {blockers.map((b, i) => (
-              <div className="va-blocker" key={i}>
-                <span className="va-blocker__icon"><VaIcon name="warn" size={16}/></span>
-                <div style={{flex:1, minWidth:0}}>
-                  <h4 className="va-blocker__title">{b.title}</h4>
-                  <p className="va-blocker__detail">{b.detail}</p>
+              <div className="flex items-start gap-3 bg-d-bg-2 border border-d-border border-l-[3px] border-l-orange rounded-md px-3.5 py-3" key={i}>
+                <span className="shrink-0 text-orange mt-px"><VaIcon name="warn" size={16}/></span>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-[13px] font-semibold text-d-fg m-0 mb-0.5">{b.title}</h4>
+                  <p className="text-[12.5px] text-d-fg-3 m-0 leading-snug">{b.detail}</p>
                   {b.items && (
-                    <ul className="va-blocker__items">
-                      {b.items.map((it, j) => <li key={j}>{it}</li>)}
+                    <ul className="mt-1.5 mb-0 pl-3.5 text-[12.5px] text-d-fg-2">
+                      {b.items.map((it, j) => <li className="my-0.5" key={j}>{it}</li>)}
                     </ul>
                   )}
                 </div>
@@ -383,14 +397,14 @@ export const DeleteAccountModal = ({ open, onClose, onConfirm, accountName, bloc
         </>
       ) : (
         <>
-          <div className="va-danger-callout">
-            <span className="va-danger-callout__icon"><VaIcon name="warn" size={20}/></span>
+          <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[10px] px-4 py-3.5 flex gap-3">
+            <span className="shrink-0 text-d-red-fg"><VaIcon name="warn" size={20}/></span>
             <div>
-              <h3 className="va-danger-callout__title">This action cannot be undone</h3>
-              <p className="va-danger-callout__body">Deleting <strong>{accountName}</strong> removes the account, all users, billing history, audit log, and any uploaded data. Mail already in transit is unaffected.</p>
+              <h3 className="text-[13.5px] font-semibold text-d-red-fg m-0 mb-1">This action cannot be undone</h3>
+              <p className="text-[12.5px] text-d-fg-2 m-0 leading-normal">Deleting <strong>{accountName}</strong> removes the account, all users, billing history, audit log, and any uploaded data. Mail already in transit is unaffected.</p>
             </div>
           </div>
-          <Field label={<>Type the account name <strong style={{color:"var(--d-fg)"}}>{accountName}</strong> to confirm</>}>
+          <Field label={<>Type the account name <strong className="text-d-fg">{accountName}</strong> to confirm</>}>
             <Input placeholder="Account name" value={typed} onChange={e=>setTyped(e.target.value)}/>
           </Field>
         </>
@@ -417,22 +431,22 @@ export const RemoveSubAccountModal = ({ open, onClose, onConfirm, sub }) => {
         confirmLabel="Remove from parent"
         confirmVariant="danger"/>}>
       {hasBlockers ? (
-        <div className="va-blockers">
+        <div className="flex flex-col gap-2">
           {sub.blockers.map((b, i) => (
-            <div className="va-blocker" key={i}>
-              <span className="va-blocker__icon"><VaIcon name="warn" size={16}/></span>
-              <div style={{flex:1, minWidth:0}}>
-                <h4 className="va-blocker__title">{b.title}</h4>
-                <p className="va-blocker__detail">{b.detail}</p>
+            <div className="flex items-start gap-3 bg-d-bg-2 border border-d-border border-l-[3px] border-l-orange rounded-md px-3.5 py-3" key={i}>
+              <span className="shrink-0 text-orange mt-px"><VaIcon name="warn" size={16}/></span>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-[13px] font-semibold text-d-fg m-0 mb-0.5">{b.title}</h4>
+                <p className="text-[12.5px] text-d-fg-3 m-0 leading-snug">{b.detail}</p>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="va-readout">
-          <div className="va-readout__row"><span className="va-readout__label">Sub-account</span><span className="va-readout__value">{sub.name}</span></div>
-          <div className="va-readout__row"><span className="va-readout__label">Current balance</span><span className="va-readout__value">{sub.balance}</span></div>
-          <div className="va-readout__row"><span className="va-readout__label">After removal</span><span className="va-readout__value">Becomes standalone account #{sub.id}</span></div>
+        <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
+          <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Sub-account</span><span className="text-d-fg font-medium">{sub.name}</span></div>
+          <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Current balance</span><span className="text-d-fg font-medium">{sub.balance}</span></div>
+          <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">After removal</span><span className="text-d-fg font-medium">Becomes standalone account #{sub.id}</span></div>
         </div>
       )}
     </Modal>
@@ -457,18 +471,18 @@ export const ChangePrimaryUserModal = ({ open, onClose, onConfirm, currentPrimar
         footer={<ModalFooter onCancel={()=>setStep("pick")}
           onConfirm={()=>{ onConfirm(sel); onClose(); }}
           confirmLabel="Confirm change"/>}>
-        <div className="va-readout">
-          <div className="va-readout__row">
-            <span className="va-readout__label">New primary user</span>
-            <span className="va-readout__value">{sel.name} &middot; {sel.email}</span>
+        <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
+          <div className="flex justify-between gap-4 text-[13px]">
+            <span className="text-d-fg-3">New primary user</span>
+            <span className="text-d-fg font-medium">{sel.name} &middot; {sel.email}</span>
           </div>
-          <div className="va-readout__row">
-            <span className="va-readout__label">Previous primary user</span>
-            <span className="va-readout__value" style={{color:"var(--d-fg-3)"}}>{currentPrimary.name} &rarr; Member</span>
+          <div className="flex justify-between gap-4 text-[13px]">
+            <span className="text-d-fg-3">Previous primary user</span>
+            <span className="text-d-fg-3 font-medium">{currentPrimary.name} &rarr; Member</span>
           </div>
-          <div className="va-readout__row">
-            <span className="va-readout__label">Both users notified by email</span>
-            <span className="va-readout__value"><span className="va-pill va-pill--green va-pill--dot">Yes</span></span>
+          <div className="flex justify-between gap-4 text-[13px]">
+            <span className="text-d-fg-3">Both users notified by email</span>
+            <span className="text-d-fg font-medium"><span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Yes</span></span>
           </div>
         </div>
       </Modal>
@@ -484,47 +498,31 @@ export const ChangePrimaryUserModal = ({ open, onClose, onConfirm, currentPrimar
         disabled={!selected}
         confirmLabel="Review change"/>}>
       {candidates.length === 0 ? (
-        <div className="va-danger-callout">
-          <span className="va-danger-callout__icon"><VaIcon name="info" size={20}/></span>
+        <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[10px] px-4 py-3.5 flex gap-3">
+          <span className="shrink-0 text-d-red-fg"><VaIcon name="info" size={20}/></span>
           <div>
-            <h3 className="va-danger-callout__title" style={{color:"var(--d-fg)"}}>No other users on this account</h3>
-            <p className="va-danger-callout__body">Add a user to this account first, then come back to reassign primary.</p>
+            <h3 className="text-[13.5px] font-semibold text-d-fg m-0 mb-1">No other users on this account</h3>
+            <p className="text-[12.5px] text-d-fg-2 m-0 leading-normal">Add a user to this account first, then come back to reassign primary.</p>
           </div>
         </div>
       ) : (
-        <div style={{display:"flex", flexDirection:"column", gap: 4}}>
+        <div className="flex flex-col gap-1">
           {candidates.map((c) => (
             <label key={c.email}
-              style={{
-                display:"flex", alignItems:"center", gap: 12,
-                padding: "12px 14px", borderRadius: 8,
-                background: selected === c.email ? "var(--d-card-2)" : "var(--d-bg-2)",
-                border: "1px solid " + (selected === c.email ? "var(--stannp-indigo)" : "var(--d-border)"),
-                cursor: "pointer", transition: "border-color .12s, background .12s",
-              }}
+              className={`flex items-center gap-3 px-3.5 py-3 rounded-lg cursor-pointer transition-[border-color,background] ${selected === c.email ? 'bg-d-card-2 border border-indigo' : 'bg-d-bg-2 border border-d-border'}`}
               onClick={()=>setSelected(c.email)}>
-              <span style={{
-                width: 18, height: 18, borderRadius: 999,
-                border: "2px solid " + (selected === c.email ? "var(--stannp-indigo)" : "var(--d-border-2)"),
-                background: selected === c.email ? "var(--stannp-indigo)" : "transparent",
-                display:"inline-flex", alignItems:"center", justifyContent:"center", flexShrink: 0,
-              }}>
-                {selected === c.email && <span style={{width: 6, height: 6, borderRadius: 999, background: "#fff"}}/>}
+              <span className={`w-4.5 h-4.5 rounded-full shrink-0 inline-flex items-center justify-center ${selected === c.email ? 'border-2 border-indigo bg-indigo' : 'border-2 border-d-border-2 bg-transparent'}`}>
+                {selected === c.email && <span className="w-1.5 h-1.5 rounded-full bg-white"/>}
               </span>
-              <span style={{
-                width: 32, height: 32, borderRadius: 999,
-                background: "var(--d-card-2)", border: "1px solid var(--d-border-2)",
-                display:"inline-flex", alignItems:"center", justifyContent:"center",
-                fontSize: 12, fontWeight: 600, color: "var(--d-fg-2)", flexShrink: 0,
-              }}>{c.name.split(" ").map(s=>s[0]).slice(0,2).join("")}</span>
-              <span style={{flex: 1, minWidth: 0}}>
-                <div style={{fontSize: 14, fontWeight: 500, color: "var(--d-fg)"}}>{c.name}</div>
-                <div style={{fontSize: 12.5, color: "var(--d-fg-3)"}}>{c.email}</div>
+              <span className="w-8 h-8 rounded-full bg-d-card-2 border border-d-border-2 inline-flex items-center justify-center text-xs font-semibold text-d-fg-2 shrink-0">{c.name.split(" ").map(s=>s[0]).slice(0,2).join("")}</span>
+              <span className="flex-1 min-w-0">
+                <div className="text-sm font-medium text-d-fg">{c.name}</div>
+                <div className="text-[12.5px] text-d-fg-3">{c.email}</div>
               </span>
-              <span className={"va-pill " + (c.role === "Owner" ? "va-pill--indigo" : "")}>{c.role}</span>
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug ${c.role === "Owner" ? "bg-d-indigo-bg text-d-indigo-fg" : "bg-d-neutral-bg text-d-neutral-fg"}`}>{c.role}</span>
               {c.mfa
-                ? <span className="va-pill va-pill--green va-pill--dot">MFA</span>
-                : <span className="va-pill va-pill--off">No MFA</span>}
+                ? <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />MFA</span>
+                : <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-fg-3">No MFA</span>}
             </label>
           ))}
         </div>

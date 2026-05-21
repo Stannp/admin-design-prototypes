@@ -30,16 +30,16 @@ const SideIcon = ({ name }) => {
 
 const SideNav = () => {
   const Item = ({ icon, label, active }) => (
-    <div className={"va-nav" + (active ? " va-nav--active" : "")}>
-      <span className="va-nav__icon"><SideIcon name={icon}/></span>
+    <div className={"flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium cursor-pointer transition-colors" + (active ? " bg-d-card text-d-fg" : " text-d-fg-2 hover:bg-d-card hover:text-d-fg")}>
+      <span className={"inline-flex" + (active ? " text-yellow" : " text-d-fg-3")}><SideIcon name={icon}/></span>
       <span>{label}</span>
     </div>
   );
   const Group = ({ title, children }) => (
     <>
-      <div className="va-side__group">
+      <div className="text-[11px] font-semibold tracking-[0.04em] uppercase text-d-fg-4 px-3 pt-3.5 pb-1.5 flex items-center justify-between">
         <span>{title}</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        <svg className="opacity-60" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M6 9l6 6 6-6"/>
         </svg>
@@ -48,7 +48,7 @@ const SideNav = () => {
     </>
   );
   return (
-    <nav className="va-side">
+    <nav className="bg-d-bg border-r border-d-border px-3 pt-4 pb-6 flex flex-col gap-1 min-h-[calc(100%-64px)]">
       <Item icon="dash" label="Dashboard"/>
       <Group title="BI Reporting">
         <Item icon="overview" label="Overview"/>
