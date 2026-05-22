@@ -1,86 +1,147 @@
-# Component Library — Design Prototypes
+# Component Library — Admin Design Prototypes
 
-All shared components live in `@shared/components` and use Tailwind v4 utilities with the project's `@theme` tokens.
+All shared components live in `src/shell/` and use Tailwind v4 utilities with the project's dark `@theme` tokens.
 
 ## Theme tokens (defined in src/index.css)
 
-**Colors:** `indigo`, `indigo-deep`, `indigo-tint`, `indigo-hover`, `yellow`, `yellow-tint`, `blue`, `blue-light`, `green`, `red`, `orange`, `fg-1`, `fg-2`, `fg-3`, `fg-disabled`, `surface`, `surface-2`, `surface-3`, `border`, `border-2`
+**Dark surfaces:** `d-bg`, `d-bg-2`, `d-card`, `d-card-2`, `d-card-hover`, `d-border`, `d-border-2`
 
-**Font:** `font-sans` is Poppins (default, never needs specifying)
+**Dark foreground:** `d-fg`, `d-fg-2`, `d-fg-3`, `d-fg-4`
 
-## Shared components
+**Brand:** `indigo`, `indigo-deep`, `indigo-hover`, `yellow`, `green`, `red`, `orange`
 
-### Icon
+**Status tints (bg + fg pairs):** `d-green-bg`/`d-green-fg`, `d-red-bg`/`d-red-fg`, `d-yellow-bg`/`d-yellow-fg`, `d-indigo-bg`/`d-indigo-fg`, `d-orange-bg`/`d-orange-fg`, `d-neutral-bg`/`d-neutral-fg`
+
+**Font:** `font-sans` is Poppins via Google Fonts
+
+**Animations:** `va-fade-in`, `va-modal-in`, `va-toast-in` keyframes defined in index.css
+
+## Shell components (src/shell/)
+
+### TopBar
+Top navigation bar with logo, search, notifications, and avatar.
 ```jsx
-<Icon name="chart" size={18} color="currentColor" stroke={1.75} />
-```
-SVG icon with 60+ named paths. See `src/shared/components/Icon.jsx` for the full list.
-
-### KPI
-```jsx
-<KPI label="Total sent" value="158,240" delta={12.4} spark={[2,3,5,7,6]} />
-<KPI label="Avg cost" value="0.36" prefix="£" unit="/piece" deltaMode="inverse" delta={-2.1} />
-```
-
-### ChartCard
-```jsx
-<ChartCard title="Volume" subtitle="Last 12 months" actions={<button>...</button>}>
-  <LineChart ... />
-</ChartCard>
+import TopBar from '../../shell/TopBar';
+<TopBar />
 ```
 
-### Charts (LineChart, BarChart, ComboChart, DoughnutChart)
-All use Chart.js under the hood. Wrap in `<ChartCard>`.
+### SideNav
+Sidebar navigation with grouped items. The active item is hardcoded to "Accounts".
 ```jsx
-<LineChart labels={[...]} series={[{ label, data, color, fill }]} height={260} fmt={v => `£${v}`} />
-<BarChart labels={[...]} series={[...]} stacked horizontal height={260} />
-<ComboChart labels={[...]} bars={{ label, data, color }} line={{ label, data, color }} />
-<DoughnutChart data={[{ label, value, color }]} centerLabel="Items" centerValue="128K" />
+import SideNav from '../../shell/SideNav';
+<SideNav />
 ```
 
-### Table (Table, Thead, Tbody, Tr, Th, Td)
+### PageHead
+Breadcrumbs + Actions dropdown menu. Accepts `hideHeading` and `onDelete` props.
 ```jsx
+import PageHead from '../../shell/PageHead';
+<PageHead onDelete={() => setOpenModal("delete")} />
+```
+
+### TabStrip
+Tabbed navigation with icons. Accepts `tabs` (string array), `active`, `onChange`.
+```jsx
+import TabStrip from '../../shell/TabStrip';
+<TabStrip tabs={["Campaigns", "Users", "Audit Log"]} active={activeTab} onChange={setActiveTab} />
+```
+
+### Toast
+Fixed-bottom success notification with green checkmark icon.
+```jsx
+import Toast from '../../shell/Toast';
+{toast && <Toast message={toast} />}
+```
+
+### ScenarioBar
+Sticky demo bar at top. Clicking "DEMO" navigates to `/`. Accepts `scenarios`, `scenario`, `onChange`, `note`.
+```jsx
+import ScenarioBar from '../../shell/ScenarioBar';
+<ScenarioBar note="Description of what you're looking at" />
+<ScenarioBar scenarios={SCENARIOS} scenario={scenario} onChange={setScenario} />
+```
+
+### Table (Table, Thead, Tbody, Tr, Th, Td, TableToolbar)
+Dark-themed table primitives with Filament-style toolbar.
+```jsx
+import { Table, Thead, Tbody, Tr, Th, Td, TableToolbar } from '../../shell/Table';
+
+<TableToolbar
+  searchPlaceholder="Search campaigns"
+  searchValue={search}
+  onSearchChange={setSearch}
+  filters={[
+    { label: "All formats", options: ["All formats", "Postcard", "Letter"], value: filter, onChange: setFilter },
+  ]}
+  columns={["ID", "Name", "Status"]}
+  visibleColumns={visible}
+  onToggleColumn={toggle}
+  onExport={() => {}}
+  pagination={{ from: 1, to: 20, total: 63, hasPrev: false, hasNext: true, onPrev, onNext }}
+/>
 <Table>
-  <Thead><Tr><Th>Name</Th><Th numeric>Amount</Th></Tr></Thead>
-  <Tbody><Tr><Td>Foo</Td><Td numeric>£100</Td></Tr></Tbody>
+  <Thead><Tr><Th>Name</Th><Th align="right">Amount</Th></Tr></Thead>
+  <Tbody><Tr><Td>Foo</Td><Td align="right">£100</Td></Tr></Tbody>
 </Table>
 ```
-Props: `Th` has `numeric`, `sortable`, `sorted`. `Td` has `numeric`, `muted`.
 
-### TableToolbar
-Filament-style table toolbar. Compound component pattern.
+## Common UI patterns (inline — no separate components)
+
+### Pills / Status badges
 ```jsx
-<TableToolbar>
-  <TableToolbar.Filters>
-    <TableToolbar.FilterDropdown label="All statuses" active={false} />
-    <TableToolbar.FilterDropdown label="All Formats" />
-    <TableToolbar.FilterDate label="All Time" />
-    <TableToolbar.FilterDate active value="2026-05-07 – 2026-06-07" />
-    <TableToolbar.FilterToggle label="Archived" value="Off" />
-  </TableToolbar.Filters>
-  <TableToolbar.Actions>
-    <TableToolbar.Search placeholder="Search" />
-    <TableToolbar.Export />
-    <TableToolbar.ColumnToggle />
-  </TableToolbar.Actions>
-</TableToolbar>
-<TableToolbar.Info count="1 - 20 of 63 items" selected={0} perPage={20} />
-{/* ... table content ... */}
-<TableToolbar.Pagination current={1} total={4} />
+<span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg">
+  <span className="w-1.5 h-1.5 rounded-full bg-current" />{/* dot */}
+  Active
+</span>
+```
+Variants: `bg-d-green-bg text-d-green-fg`, `bg-d-red-bg text-d-red-fg`, `bg-d-yellow-bg text-d-yellow-fg`, `bg-d-indigo-bg text-d-indigo-fg`, `bg-d-orange-bg text-d-orange-fg`, `bg-d-neutral-bg text-d-neutral-fg`, `bg-d-neutral-bg text-d-fg-3` (off/muted)
+
+### Buttons
+```jsx
+{/* Ghost */}
+<button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">...</button>
+{/* Primary (orange) */}
+<button className="... bg-orange text-white hover:brightness-110">...</button>
+{/* Indigo */}
+<button className="... bg-indigo text-white hover:bg-indigo-hover">...</button>
+{/* Danger */}
+<button className="... bg-red text-white hover:brightness-110">...</button>
 ```
 
-### ProGate (see pro-gate.md skill for full docs)
-Four variants: `overlay` (default), `compact`, `teaser`, `banner`.
+### Edit button (inline, small)
+```jsx
+<button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Edit</button>
+```
 
-### Other: PageHead, DateRangePicker, ExportMenu, FilterBar, SubNav, Status, Funnel
+### Cards
+```jsx
+<div className="bg-d-card border border-d-border rounded-[14px] px-6 py-[22px]">...</div>
+```
 
-## Shell components (`@shell/`)
+### Tab panels
+```jsx
+<div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
+  <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
+    <span className="text-[17px] font-semibold text-d-fg">Title</span>
+  </div>
+  {/* table or content */}
+</div>
+```
 
-- `Shell` — sidebar + topbar layout. Pass `flush` for no page padding.
-- `Sidebar` — indigo gradient sidebar. Pass `subnav` for expandable sub-items.
-- `Topbar` — breadcrumbs + action buttons.
-- `ScenarioBar` — demo scenario switcher. Clicking "DEMO" navigates home.
-- `TweaksPanel` / `useTweaks` — floating tweaks panel (optional).
+## App shell layout
+
+```jsx
+<div className="font-sans text-d-fg bg-d-bg antialiased">
+  <ScenarioBar ... />
+  <div className="grid grid-cols-[264px_1fr] min-h-full bg-d-bg">
+    <TopBar />
+    <SideNav />
+    <main className="px-8 pt-6 pb-10">
+      {/* page content */}
+    </main>
+  </div>
+</div>
+```
 
 ## Prototype structure
 
@@ -95,11 +156,11 @@ MyPrototype.meta = {
   status: 'idea', // idea | wip | review | approved
 };
 ```
-Then add a route in `App.jsx` and import it.
+Then add a route in `App.jsx` and import it into the `prototypes` array.
 
 ## Style conventions
 
 - Use Tailwind utilities everywhere — no custom CSS classes
-- Only use `style={{}}` for truly dynamic computed values (percentage widths, conditional colors from props, dynamic grid columns)
-- Use theme tokens: `text-fg-3` not `text-[#777]`, `bg-surface-2` not `bg-[#FAFAFB]`, `border-border` not `border-[#ECECEC]`
-- Font sizes: `text-xs` (12px), `text-sm` (14px), `text-base` (15-16px), `text-lg` (18px), `text-xl` (20px), `text-2xl` (24px), `text-3xl` (30px)
+- Only use `style={{}}` for truly dynamic computed values (percentage widths, conditional colors from props)
+- Use theme tokens: `text-d-fg-3` not `text-[#8E8E93]`, `bg-d-card` not `bg-[#18181B]`
+- This is a dark admin theme — all surfaces are dark, all text is light

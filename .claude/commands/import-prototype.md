@@ -31,14 +31,13 @@ Identify:
 - What the prototype does (page name, key features)
 - What components it uses (tables, charts, modals, cards, etc.)
 - What data it needs (mock data, state)
-- What scenarios/variants it has (free/pro, different user types)
+- What scenarios/variants it has
 
 ### 3. Create the prototype directory
 
 Create `src/prototypes/{name}/` with:
-- `index.jsx` — main component with `.meta`, Shell, ScenarioBar, state
-- `data.js` — mock data extracted from the HTML/JSX (ES module exports, not window globals)
-- Additional files as needed (pages, panels, modals)
+- `index.jsx` — main component with `.meta`, shell layout, ScenarioBar, state
+- Additional files as needed (top.jsx, tabs.jsx, modals.jsx, data.js)
 
 ### 4. Convert to ES modules
 
@@ -50,37 +49,30 @@ Apply these conversions to ALL source code:
 
 ### 5. Replace with shared components
 
-**CRITICAL: Use our shared components instead of recreating them.**
+**CRITICAL: Use our shared shell components instead of recreating them.**
 
-Check the skill files in `.claude/skills/` for full documentation, especially:
-- `component-library.md` — full list of available components and their APIs
-- `pro-gate.md` — ProGate subscription gating component
+Check `.claude/skills/component-library.md` for full documentation.
 
 Key replacements:
-- Custom lock overlays / "Pro only" gates → `<ProGate>` (see pro-gate.md for the 4 variants)
-- Raw `<table>` elements → `<Table>`, `<Thead>`, `<Tbody>`, `<Tr>`, `<Th>`, `<Td>`
-- Table filter bars / toolbars → `<TableToolbar>` compound component
-- Custom icon SVGs → `<Icon name="...">` (check Icon.jsx for available names, add new paths if needed)
-- KPI cards → `<KPI>`
-- Chart wrappers → `<ChartCard>` + `<LineChart>` / `<BarChart>` / `<ComboChart>` / `<DoughnutChart>`
-- Page headers → `<PageHead>`
-- Status pills → `<Status kind="green|red|indigo|yellow|muted">`
-- Delivery funnels → `<Funnel>`
-- Filter bars → `<FilterBar>` or `<TableToolbar.Filters>`
-- Date range pickers → `<TableToolbar.FilterDate>` (inside table toolbars) or `<DateRangePicker>` (standalone)
+- Raw `<table>` elements → `<Table>`, `<Thead>`, `<Tbody>`, `<Tr>`, `<Th>`, `<Td>` from `../../shell/Table`
+- Table filter bars / toolbars → `<TableToolbar>` from `../../shell/Table`
+- Page headers → `<PageHead>` from `../../shell/PageHead`
+- Tab navigation → `<TabStrip>` from `../../shell/TabStrip`
+- Toast notifications → `<Toast>` from `../../shell/Toast`
+- Status pills → inline Tailwind (see component-library.md for the pattern)
 
 ### 6. Convert all styling to Tailwind
 
 - Replace ALL inline `style={{}}` with Tailwind utility classes
 - Replace ALL custom CSS classes with Tailwind utilities
-- Use theme tokens: `text-fg-3`, `bg-surface-2`, `border-border`, `text-indigo`, `bg-yellow` etc.
+- Use dark theme tokens: `text-d-fg-3`, `bg-d-card`, `border-d-border`, `text-indigo`, `bg-yellow` etc.
 - Only keep `style` for truly dynamic computed values (percentage widths, conditional colors from props)
 - Do NOT create any custom CSS — everything should be Tailwind utilities
 - See `component-library.md` for the full theme token list
 
 ### 7. Wire up the prototype
 
-1. Add a route in `src/App.jsx`:
+1. Add to `src/App.jsx`:
 ```jsx
 import MyPrototype from './prototypes/my-prototype';
 // Add to prototypes array
@@ -107,27 +99,28 @@ Run `npx vite build` — must pass with 0 errors.
 Check there are:
 - No `window.` references
 - No `Object.assign(window, ...)` lines
-- No custom CSS classes (grep for `className="` and check none reference classes not in Tailwind or shared components)
+- No custom CSS classes
 - No `<style>` tags
-- Shared components used everywhere possible (no reinventing ProGate, Table, Icon, etc.)
+- Shared components used everywhere possible
 
 ## Shell setup
 
-The prototype should use the shared Shell:
+The prototype should use the app shell layout:
 ```jsx
-import Shell from '@shell/Shell';
-import ScenarioBar from '@shell/ScenarioBar';
+import ScenarioBar from '../../shell/ScenarioBar';
+import TopBar from '../../shell/TopBar';
+import SideNav from '../../shell/SideNav';
+import PageHead from '../../shell/PageHead';
 
-// If it has scenarios:
-<ScenarioBar scenarios={SCENARIOS} scenario={scenario} onChange={setScenario} />
-<Shell breadcrumbs={breadcrumbs}>
-  {/* content */}
-</Shell>
-
-// If no scenarios, just the shell:
-<Shell breadcrumbs={[{ label: "Page Name" }]}>
-  {/* content */}
-</Shell>
+<div className="font-sans text-d-fg bg-d-bg antialiased">
+  <ScenarioBar note="Description of prototype" />
+  <div className="grid grid-cols-[264px_1fr] min-h-full bg-d-bg">
+    <TopBar />
+    <SideNav />
+    <main className="px-8 pt-6 pb-10">
+      <PageHead />
+      {/* page content */}
+    </main>
+  </div>
+</div>
 ```
-
-Use `<Shell flush>` if the prototype manages its own padding (like the subscription dashboard).
