@@ -18,8 +18,8 @@ const VaIcon = ({ name, size = 18, color = "currentColor", stroke = 1.75 }) => {
   );
 };
 
-const TopOptionB = ({ data, openModal }) => {
-  const { user, manager, region, billingAddress, lowBalance, mfa, system, paymentMethods } = data;
+const TopOptionB = ({ data, openModal, disabled }) => {
+  const { user, manager, region, billingAddress, lowBalance, mfa, system, paymentMethods, accountName } = data;
 
   const formatAddress = (a) =>
     [a.line1, a.line2, [a.city, a.postcode].filter(Boolean).join(" "), a.country].filter(Boolean);
@@ -29,7 +29,7 @@ const TopOptionB = ({ data, openModal }) => {
       {/* ===== Hero summary ===== */}
       <div className="relative bg-d-card border border-d-border rounded-[14px] px-7 py-[26px] flex flex-col gap-5">
         {/* UK flag — top right */}
-        <span className="absolute top-6 right-7 inline-flex items-center gap-2 text-[12.5px] text-d-fg-3" title={region}>
+        <span className="absolute top-6 right-7 inline-flex items-center gap-2 text-xs text-d-fg-3" title={region}>
           <span className="w-7 h-5 rounded-[3px] overflow-hidden shadow-[0_0_0_1px_var(--color-d-border)] shrink-0">
             <svg viewBox="0 0 60 30" width="100%" height="100%">
               <clipPath id="ukclip"><rect width="60" height="30"/></clipPath>
@@ -47,7 +47,7 @@ const TopOptionB = ({ data, openModal }) => {
 
         <div>
           {/* One-line subtitle: IDs, manager, source, created — no more bar of details below */}
-          <div className="flex items-center flex-wrap gap-x-2.5 gap-y-1.5 text-[12.5px] text-d-fg-3 mb-2">
+          <div className="flex items-center flex-wrap gap-x-2.5 gap-y-1.5 text-xs text-d-fg-3 mb-2">
             <span className="tabular-nums text-d-fg-2">Account #{system.accountId}</span>
             <span className="text-d-fg-4">&middot;</span>
             <span>HubSpot</span>
@@ -61,7 +61,7 @@ const TopOptionB = ({ data, openModal }) => {
           </div>
 
           <h2 className="text-[26px] font-bold tracking-tight text-d-fg m-0 mb-3">
-            Vivid Design Services Ltd.
+            {accountName || "Vivid Design Services Ltd."}
           </h2>
           <div className="flex flex-wrap gap-1.5">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Paid</span>
@@ -76,17 +76,17 @@ const TopOptionB = ({ data, openModal }) => {
           <div className="flex flex-col gap-1.5">
             <span className="text-[11px] font-semibold text-d-fg-3 uppercase tracking-[0.05em]">Current Balance</span>
             <span className="text-[28px] font-bold tracking-tight text-d-fg">&pound;1,425.20</span>
-            <span className="text-[12.5px] text-d-fg-3">Credit allowance &pound;500.00</span>
+            <span className="text-xs text-d-fg-3">Credit allowance &pound;500.00</span>
           </div>
           <div className="flex flex-col gap-1.5">
             <span className="text-[11px] font-semibold text-d-fg-3 uppercase tracking-[0.05em]">Total spent</span>
             <span className="text-[22px] font-bold tracking-tight text-green">&pound;18,742.50</span>
-            <span className="text-[12.5px] text-d-fg-3">Lifetime &middot; 142 campaigns</span>
+            <span className="text-xs text-d-fg-3">Lifetime &middot; 142 campaigns</span>
           </div>
           <div className="flex flex-col gap-1.5">
             <span className="text-[11px] font-semibold text-d-fg-3 uppercase tracking-[0.05em]">Last 30 days</span>
             <span className="text-[22px] font-bold tracking-tight text-d-fg">&pound;842.00</span>
-            <span className="text-[12.5px] text-d-fg-3">4 campaigns &middot; avg &pound;210.50</span>
+            <span className="text-xs text-d-fg-3">4 campaigns &middot; avg &pound;210.50</span>
           </div>
         </div>
       </div>
@@ -100,64 +100,66 @@ const TopOptionB = ({ data, openModal }) => {
             <span className="w-7 h-7 rounded-md inline-flex items-center justify-center bg-d-card-2 text-d-fg-2">
               <VaIcon name="user" size={16}/>
             </span>
-            <span className="text-[15px] font-semibold text-d-fg">Primary user</span>
+            <span className="text-base font-semibold text-d-fg">Primary user</span>
             <div className="ml-auto inline-flex gap-1">
-              <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-xs font-medium font-sans px-2.5 py-1.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2" onClick={()=>openModal("editUser")}>
+              {!disabled && <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-xs font-medium font-sans px-2.5 py-1.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2" onClick={()=>openModal("editUser")}>
                 <VaIcon name="edit" size={12}/>
                 Edit
-              </button>
+              </button>}
             </div>
           </div>
           <div className="flex flex-col gap-3.5">
             <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Name</span>
-              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">{user.name}</span>
+              <span className="text-xs text-d-fg-3 font-medium shrink-0">Name</span>
+              <span className="text-sm text-d-fg font-medium text-right min-w-0">{user.name}</span>
             </div>
             <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Email</span>
-              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">{user.email}</span>
+              <span className="text-xs text-d-fg-3 font-medium shrink-0">Email</span>
+              <span className="text-sm text-d-fg font-medium text-right min-w-0">{user.email}</span>
             </div>
             <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Phone</span>
-              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">{user.phone || <span className="text-d-fg-3">Not set</span>}</span>
+              <span className="text-xs text-d-fg-3 font-medium shrink-0">Phone</span>
+              <span className="text-sm text-d-fg font-medium text-right min-w-0">{user.phone || <span className="text-d-fg-3">Not set</span>}</span>
             </div>
             <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Contact prefs</span>
-              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0 flex gap-1 flex-wrap justify-end">
+              <span className="text-xs text-d-fg-3 font-medium shrink-0">Contact prefs</span>
+              <span className="text-sm text-d-fg font-medium text-right min-w-0 flex gap-1 flex-wrap justify-end">
                 {user.prefs.product && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Product</span>}
                 {user.prefs.marketing && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Marketing</span>}
                 {user.prefs.account && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-neutral-fg">Account</span>}
                 {!user.prefs.product && !user.prefs.marketing && !user.prefs.account &&
-                  <span className="text-d-fg-3 text-[12.5px]">None</span>}
+                  <span className="text-d-fg-3 text-xs">None</span>}
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">MFA</span>
-              <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0">
+              <span className="text-xs text-d-fg-3 font-medium shrink-0">MFA</span>
+              <span className="text-sm text-d-fg font-medium text-right min-w-0">
                 {mfa.enabled
                   ? <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Enabled</span>
                   : <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-fg-3">Not enabled</span>}
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-              <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0">Last login</span>
-              <span className="text-[13.5px] text-d-fg-2 font-medium text-right min-w-0">{user.lastLogin}</span>
+              <span className="text-xs text-d-fg-3 font-medium shrink-0">Last login</span>
+              <span className="text-sm text-d-fg-2 font-medium text-right min-w-0">{user.lastLogin}</span>
             </div>
           </div>
-          <div className="flex gap-2 mt-4 pt-4 border-t border-d-border flex-wrap">
-            <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("changePrimary")}>
-              <VaIcon name="user" size={13}/>
-              Change primary user
-            </button>
-            <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("resetPw")}>
-              <VaIcon name="key" size={13}/>
-              Reset password
-            </button>
-            <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("mfa")}>
-              <VaIcon name="shield" size={13}/>
-              Manage MFA
-            </button>
-          </div>
+          {!disabled && (
+            <div className="flex gap-2 mt-4 pt-4 border-t border-d-border flex-wrap">
+              <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("changePrimary")}>
+                <VaIcon name="user" size={13}/>
+                Change primary user
+              </button>
+              <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("resetPw")}>
+                <VaIcon name="key" size={13}/>
+                Reset password
+              </button>
+              <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={()=>openModal("mfa")}>
+                <VaIcon name="shield" size={13}/>
+                Manage MFA
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Billing settings — now with payment method examples */}
@@ -166,14 +168,14 @@ const TopOptionB = ({ data, openModal }) => {
             <span className="w-7 h-7 rounded-md inline-flex items-center justify-center bg-d-card-2 text-d-fg-2">
               <VaIcon name="money" size={16}/>
             </span>
-            <span className="text-[15px] font-semibold text-d-fg">Billing settings</span>
+            <span className="text-base font-semibold text-d-fg">Billing settings</span>
           </div>
 
           <div className="flex items-center justify-between gap-3 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-            <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0 self-start pt-0.5">Billing address</span>
-            <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0 break-all flex items-center gap-2 flex-col items-end">
+            <span className="text-xs text-d-fg-3 font-medium shrink-0 self-start pt-0.5">Billing address</span>
+            <span className="text-sm text-d-fg font-medium text-right min-w-0 break-all flex items-center gap-2 flex-col items-end">
               {formatAddress(billingAddress).map((line, i) => (
-                <span key={i} className="text-[13px] leading-snug">{line}</span>
+                <span key={i} className="text-sm leading-snug">{line}</span>
               ))}
               <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2 mt-1"
                 onClick={()=>openModal("billingAddress")}>
@@ -184,11 +186,11 @@ const TopOptionB = ({ data, openModal }) => {
           </div>
 
           <div className="flex items-center justify-between gap-3 py-2.5 border-b border-d-border last:border-b-0 last:pb-0 first:pt-0">
-            <span className="text-[12.5px] text-d-fg-3 font-medium shrink-0 self-start pt-0.5">Low balance</span>
-            <span className="text-[13.5px] text-d-fg font-medium text-right min-w-0 break-all flex items-center gap-2 flex-col items-end gap-1">
+            <span className="text-xs text-d-fg-3 font-medium shrink-0 self-start pt-0.5">Low balance</span>
+            <span className="text-sm text-d-fg font-medium text-right min-w-0 break-all flex items-center gap-2 flex-col items-end gap-1">
               {lowBalance.enabled
-                ? <span className="text-[13px]">Auto top-up <strong>{lowBalance.topUpAmount}</strong> at {lowBalance.threshold}</span>
-                : <span className="text-[13px] text-d-fg-3">Disabled — account pauses at &pound;0</span>}
+                ? <span className="text-sm">Auto top-up <strong>{lowBalance.topUpAmount}</strong> at {lowBalance.threshold}</span>
+                : <span className="text-sm text-d-fg-3">Disabled — account pauses at &pound;0</span>}
               <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2"
                 onClick={()=>openModal("lowBalance")}>
                 <VaIcon name="edit" size={11}/>
@@ -200,7 +202,7 @@ const TopOptionB = ({ data, openModal }) => {
           {/* Payment methods — show actual cards */}
           <div className="pt-3.5 border-t border-d-border mt-1">
             <div className="flex justify-between items-center mb-2.5">
-              <span className="text-[12.5px] text-d-fg-3 font-medium">Payment methods</span>
+              <span className="text-xs text-d-fg-3 font-medium">Payment methods</span>
               <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">
                 <VaIcon name="plus" size={11}/>
                 Add card
@@ -208,7 +210,7 @@ const TopOptionB = ({ data, openModal }) => {
             </div>
             <div className="flex flex-col gap-1.5">
               {paymentMethods.length === 0 ? (
-                <div className="text-[13px] text-d-fg-3 px-2.5 py-2">No cards on file</div>
+                <div className="text-sm text-d-fg-3 px-2.5 py-2">No cards on file</div>
               ) : paymentMethods.map((pm, i) => (
                 <div className="flex items-center gap-2.5 px-2.5 py-2 bg-d-bg-2 border border-d-border rounded-lg" key={i}>
                   <span className={`w-9 h-6 rounded inline-flex items-center justify-center text-[9px] font-bold tracking-[0.04em] shrink-0 ${
@@ -218,7 +220,7 @@ const TopOptionB = ({ data, openModal }) => {
                   }`}>
                     {pm.brand.toUpperCase()}
                   </span>
-                  <span className="text-[13px] font-medium text-d-fg tabular-nums flex-1">&bull;&bull;&bull;&bull; {pm.last4}</span>
+                  <span className="text-sm font-medium text-d-fg tabular-nums flex-1">&bull;&bull;&bull;&bull; {pm.last4}</span>
                   <span className="text-xs text-d-fg-3 tabular-nums">{pm.exp}</span>
                   {pm.default && <span className="text-[10px] font-semibold text-d-green-fg bg-d-green-bg px-[7px] py-0.5 rounded-full uppercase tracking-[0.04em]">Default</span>}
                 </div>
@@ -236,12 +238,12 @@ const TopOptionB = ({ data, openModal }) => {
                 <circle cx="12" cy="12" r="9"/><path d="M12 12L19 5"/>
               </svg>
             </span>
-            <span className="text-[15px] font-semibold text-d-fg">Plan limits</span>
+            <span className="text-base font-semibold text-d-fg">Plan limits</span>
             <div className="ml-auto inline-flex gap-1">
               <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-xs font-medium font-sans px-2.5 py-1.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Manage</button>
             </div>
           </div>
-          <div className="text-d-fg-3 text-[12.5px] -mt-2 mb-4.5">
+          <div className="text-d-fg-3 text-xs -mt-2 mb-4.5">
             Legacy plan &middot; API 300/min
           </div>
           <div className="flex flex-col gap-4.5">

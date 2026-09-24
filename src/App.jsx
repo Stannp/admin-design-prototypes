@@ -2,8 +2,9 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 
 import ViewAccountPrototype from './prototypes/view-account';
+import AccountDeletionsPrototype from './prototypes/account-deletions';
 
-const prototypes = [ViewAccountPrototype];
+const prototypes = [ViewAccountPrototype, AccountDeletionsPrototype];
 
 const STATUS_STYLES = {
   idea:     { label: "Idea",             desc: "Being explored",       bg: "rgba(252,185,29,0.15)", fg: "#8A6300", dot: "#FCB91D" },
@@ -82,6 +83,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<PrototypePicker />} />
       <Route path="/view-account/*" element={<ViewAccountPrototype />} />
+      <Route path="/account-deletions/*" element={<AccountDeletionsPrototype />} />
       <Route path="*" element={<PrototypePicker />} />
     </Routes>
   );

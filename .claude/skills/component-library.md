@@ -61,28 +61,30 @@ import ScenarioBar from '../../shell/ScenarioBar';
 <ScenarioBar scenarios={SCENARIOS} scenario={scenario} onChange={setScenario} />
 ```
 
-### Table (Table, Thead, Tbody, Tr, Th, Td, TableToolbar)
-Dark-themed table primitives with Filament-style toolbar.
+### Table (Table, Thead, Tbody, Tr, Th, Td, TableToolbar, TablePagination)
+Dark-themed table primitives matching the Filament layout:
+- **TableToolbar** sits above the headers, right-aligned: search input + filter icon + column toggle icon
+- **Table** with Thead/Tbody/Tr/Th/Td renders the data
+- **TablePagination** sits below the table: "Showing X to Y of Z results" left, optional per-page selector center, prev/next buttons right
 ```jsx
-import { Table, Thead, Tbody, Tr, Th, Td, TableToolbar } from '../../shell/Table';
+import { Table, Thead, Tbody, Tr, Th, Td, TableToolbar, TablePagination } from '../../shell/Table';
 
-<TableToolbar
-  searchPlaceholder="Search campaigns"
-  searchValue={search}
-  onSearchChange={setSearch}
-  filters={[
-    { label: "All formats", options: ["All formats", "Postcard", "Letter"], value: filter, onChange: setFilter },
-  ]}
-  columns={["ID", "Name", "Status"]}
-  visibleColumns={visible}
-  onToggleColumn={toggle}
-  onExport={() => {}}
-  pagination={{ from: 1, to: 20, total: 63, hasPrev: false, hasNext: true, onPrev, onNext }}
-/>
-<Table>
-  <Thead><Tr><Th>Name</Th><Th align="right">Amount</Th></Tr></Thead>
-  <Tbody><Tr><Td>Foo</Td><Td align="right">£100</Td></Tr></Tbody>
-</Table>
+<div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
+  <TableToolbar
+    searchPlaceholder="Search campaigns"
+    searchValue={search}
+    onSearchChange={setSearch}
+    filters={[{ label: "All formats", options: [...], value: filter, onChange: setFilter }]}
+    columns={["ID", "Name", "Status"]}
+    visibleColumns={visible}
+    onToggleColumn={toggle}
+  />
+  <Table>
+    <Thead><Tr><Th>Name</Th><Th align="right">Amount</Th></Tr></Thead>
+    <Tbody><Tr><Td>Foo</Td><Td align="right">£100</Td></Tr></Tbody>
+  </Table>
+  <TablePagination from={1} to={10} total={63} hasPrev={false} hasNext={true} onPrev={onPrev} onNext={onNext} />
+</div>
 ```
 
 ## Common UI patterns (inline — no separate components)
@@ -99,7 +101,7 @@ Variants: `bg-d-green-bg text-d-green-fg`, `bg-d-red-bg text-d-red-fg`, `bg-d-ye
 ### Buttons
 ```jsx
 {/* Ghost */}
-<button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">...</button>
+<button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">...</button>
 {/* Primary (orange) */}
 <button className="... bg-orange text-white hover:brightness-110">...</button>
 {/* Indigo */}
@@ -122,7 +124,7 @@ Variants: `bg-d-green-bg text-d-green-fg`, `bg-d-red-bg text-d-red-fg`, `bg-d-ye
 ```jsx
 <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
   <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
-    <span className="text-[17px] font-semibold text-d-fg">Title</span>
+    <span className="text-lg font-semibold text-d-fg">Title</span>
   </div>
   {/* table or content */}
 </div>
@@ -163,4 +165,6 @@ Then add a route in `App.jsx` and import it into the `prototypes` array.
 - Use Tailwind utilities everywhere — no custom CSS classes
 - Only use `style={{}}` for truly dynamic computed values (percentage widths, conditional colors from props)
 - Use theme tokens: `text-d-fg-3` not `text-[#8E8E93]`, `bg-d-card` not `bg-[#18181B]`
+- **Prefer Tailwind default scale values** (`text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`, `text-3xl`) over computed values (`text-[13px]`, `text-[15px]`). Only use computed `text-[Npx]` when no default is close enough (e.g. `text-[11px]` for badge text where `text-xs`/12px is too large)
+- **Prefer shell components over custom markup.** For any table, use `Table`, `Thead`, `Tbody`, `Tr`, `Th`, `Td` and `TableToolbar` from `src/shell/Table.jsx`. For navigation, use `TopBar`, `SideNav`, `PageHead`, `TabStrip`, `ScenarioBar`, `Toast` from `src/shell/`. Only write custom equivalents when the shell component genuinely cannot support the requirement (e.g. sortable headers can wrap `Th` with extra props rather than replacing it)
 - This is a dark admin theme — all surfaces are dark, all text is light

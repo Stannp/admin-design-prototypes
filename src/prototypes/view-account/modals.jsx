@@ -42,8 +42,8 @@ const Modal = ({ open, onClose, icon, iconVariant, title, subtitle, children, fo
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <h2 className="m-0 text-[17px] font-semibold text-d-fg">{title}</h2>
-            {subtitle && <p className="mt-1 mb-0 text-[13px] text-d-fg-3 leading-snug">{subtitle}</p>}
+            <h2 className="m-0 text-lg font-semibold text-d-fg">{title}</h2>
+            {subtitle && <p className="mt-1 mb-0 text-sm text-d-fg-3 leading-snug">{subtitle}</p>}
           </div>
           <button className="shrink-0 w-8 h-8 rounded-md bg-transparent border-none cursor-pointer text-d-fg-3 inline-flex items-center justify-center hover:bg-d-card-2 hover:text-d-fg" onClick={onClose} aria-label="Close">
             <VaIcon name="x" size={16}/>
@@ -64,10 +64,10 @@ const ModalFooter = ({ onCancel, onConfirm, confirmLabel = "Save changes", confi
   };
   return (
     <>
-      {secondaryLeft && <div className="text-d-fg-3 text-[12.5px]">{secondaryLeft}</div>}
+      {secondaryLeft && <div className="text-d-fg-3 text-xs">{secondaryLeft}</div>}
       <div className="flex gap-2.5 ml-auto">
-        <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-[13.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={onCancel}>Cancel</button>
-        <button className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-[13.5px] border border-transparent cursor-pointer transition-[filter,background] ${variantMap[confirmVariant]} disabled:bg-d-card-2 disabled:text-d-fg-4 disabled:cursor-not-allowed disabled:border-d-border`} disabled={disabled} onClick={onConfirm}>
+        <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-sm border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg" onClick={onCancel}>Cancel</button>
+        <button className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-sm border border-transparent cursor-pointer transition-[filter,background] ${variantMap[confirmVariant]} disabled:bg-d-card-2 disabled:text-d-fg-4 disabled:cursor-not-allowed disabled:border-d-border`} disabled={disabled} onClick={onConfirm}>
           {confirmLabel}
         </button>
       </div>
@@ -83,10 +83,10 @@ const Field = ({ label, hint, children }) => (
     {hint && <span className="text-xs text-d-fg-3">{hint}</span>}
   </div>
 );
-const Input = (props) => <input className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-[13.5px] w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20" {...props}/>;
+const Input = (props) => <input className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-sm w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20" {...props}/>;
 const Select = ({ children, ...props }) => (
   <select
-    className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-[13.5px] w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20 appearance-none bg-no-repeat bg-[right_12px_center] pr-9"
+    className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-sm w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20 appearance-none bg-no-repeat bg-[right_12px_center] pr-9"
     style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")` }}
     {...props}
   >
@@ -99,7 +99,7 @@ const Checkbox = ({ checked, onChange, label, hint }) => (
       <VaIcon name="check" size={12} stroke={2.4}/>
     </span>
     <div>
-      <div className="text-[13.5px] text-d-fg leading-snug">{label}</div>
+      <div className="text-sm text-d-fg leading-snug">{label}</div>
       {hint && <div className="text-xs text-d-fg-3 mt-0.5">{hint}</div>}
     </div>
   </div>
@@ -131,11 +131,11 @@ export const EditUserModal = ({ open, onClose, onSave, user }) => {
           onConfirm={()=>{ onSave({ name, email, phone, prefs }); onClose(); }}
           confirmLabel="Confirm and save"/>}>
         <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
-          {name !== user.name && <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Name</span><span className="text-d-fg font-medium">{user.name} &rarr; {name}</span></div>}
-          {email !== user.email && <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Email</span><span className="text-d-fg font-medium">{user.email} &rarr; {email}</span></div>}
-          {phone !== user.phone && <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Phone</span><span className="text-d-fg font-medium">{user.phone || "\u2014"} &rarr; {phone}</span></div>}
+          {name !== user.name && <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Name</span><span className="text-d-fg font-medium">{user.name} &rarr; {name}</span></div>}
+          {email !== user.email && <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Email</span><span className="text-d-fg font-medium">{user.email} &rarr; {email}</span></div>}
+          {phone !== user.phone && <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Phone</span><span className="text-d-fg font-medium">{user.phone || "\u2014"} &rarr; {phone}</span></div>}
           {Object.keys(prefs).map(k => prefs[k] !== user.prefs[k] && (
-            <div className="flex justify-between gap-4 text-[13px]" key={k}>
+            <div className="flex justify-between gap-4 text-sm" key={k}>
               <span className="text-d-fg-3">{k}</span>
               <span className="text-d-fg font-medium">{user.prefs[k] ? "On" : "Off"} &rarr; {prefs[k] ? "On" : "Off"}</span>
             </div>
@@ -182,8 +182,8 @@ export const ResetPasswordModal = ({ open, onClose, onConfirm, email }) => (
     footer={<ModalFooter onCancel={onClose} onConfirm={onConfirm}
       confirmLabel="Send reset email" confirmVariant="indigo"/>}>
     <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
-      <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Recipient</span><span className="text-d-fg font-medium">{email}</span></div>
-      <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Action</span><span className="text-d-fg font-medium">Force password reset on next login</span></div>
+      <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Recipient</span><span className="text-d-fg font-medium">{email}</span></div>
+      <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Action</span><span className="text-d-fg font-medium">Force password reset on next login</span></div>
     </div>
   </Modal>
 );
@@ -204,7 +204,7 @@ export const ManageMfaModal = ({ open, onClose, onSave, mfa }) => {
         onConfirm={()=>{ onSave({ enabled, reset }); onClose(); }}
         confirmLabel="Apply MFA settings"/>}>
       <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
-        <div className="flex justify-between gap-4 text-[13px]">
+        <div className="flex justify-between gap-4 text-sm">
           <span className="text-d-fg-3">Current status</span>
           <span className="text-d-fg font-medium">
             {mfa.enabled
@@ -213,7 +213,7 @@ export const ManageMfaModal = ({ open, onClose, onSave, mfa }) => {
           </span>
         </div>
         {mfa.enabled && (
-          <div className="flex justify-between gap-4 text-[13px]">
+          <div className="flex justify-between gap-4 text-sm">
             <span className="text-d-fg-3">Last verified</span>
             <span className="text-d-fg font-medium">{mfa.lastVerified}</span>
           </div>
@@ -348,70 +348,71 @@ export const EditLowBalanceModal = ({ open, onClose, onSave, lowBalance }) => {
 };
 
 // ============================================================
-// 7. Delete Account — with blocker checks
+// 7. Mark Account for Deletion
 // ============================================================
-export const DeleteAccountModal = ({ open, onClose, onConfirm, accountName, blockers }) => {
+export const DeleteAccountModal = ({ open, onClose, onConfirm, accountName }) => {
   const [typed, setTyped] = React.useState("");
-  React.useEffect(()=>{ if (open) setTyped(""); }, [open]);
-  const hasBlockers = blockers && blockers.length > 0;
-  const canDelete = !hasBlockers && typed.trim() === accountName;
+  const [reason, setReason] = React.useState("");
+  React.useEffect(()=>{ if (open) { setTyped(""); setReason(""); } }, [open]);
+
+  const deletionDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const deletionDateStr = deletionDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const canConfirm = reason.trim().length > 0 && typed.trim() === accountName;
 
   return (
     <Modal open={open} onClose={onClose} icon="trash" iconVariant="danger"
-      title="Delete account"
-      subtitle={hasBlockers
-        ? "This account cannot be deleted yet. Resolve the blockers below first."
-        : "This permanently removes the account and all associated records."}
+      title="Mark for deletion"
+      subtitle={`The account will be deleted automatically on ${deletionDateStr}. The account manager can cancel within 7 days.`}
       footer={<ModalFooter onCancel={onClose}
-        onConfirm={()=>{ onConfirm && onConfirm(); onClose(); }}
-        disabled={!canDelete}
-        confirmLabel="Delete account permanently"
-        confirmVariant="danger"
-        secondaryLeft={hasBlockers ? "Resolve all blockers to enable deletion" : null}/>}>
+        onConfirm={()=>{ onConfirm && onConfirm({ reason, deletionDate: deletionDateStr }); onClose(); }}
+        disabled={!canConfirm}
+        confirmLabel="Mark for deletion"
+        confirmVariant="danger"/>}>
 
-      {hasBlockers ? (
-        <>
-          <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[10px] px-4 py-3.5 flex gap-3">
-            <span className="shrink-0 text-d-red-fg"><VaIcon name="warn" size={20}/></span>
-            <div>
-              <h3 className="text-[13.5px] font-semibold text-d-red-fg m-0 mb-1">{blockers.length} blocker{blockers.length === 1 ? "" : "s"} found</h3>
-              <p className="text-[12.5px] text-d-fg-2 m-0 leading-normal">All blockers must be cleared before this account can be deleted. Contact accounts@stannp.com if you need help unwinding any of these.</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            {blockers.map((b, i) => (
-              <div className="flex items-start gap-3 bg-d-bg-2 border border-d-border border-l-[3px] border-l-orange rounded-md px-3.5 py-3" key={i}>
-                <span className="shrink-0 text-orange mt-px"><VaIcon name="warn" size={16}/></span>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-[13px] font-semibold text-d-fg m-0 mb-0.5">{b.title}</h4>
-                  <p className="text-[12.5px] text-d-fg-3 m-0 leading-snug">{b.detail}</p>
-                  {b.items && (
-                    <ul className="mt-1.5 mb-0 pl-3.5 text-[12.5px] text-d-fg-2">
-                      {b.items.map((it, j) => <li className="my-0.5" key={j}>{it}</li>)}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[10px] px-4 py-3.5 flex gap-3">
-            <span className="shrink-0 text-d-red-fg"><VaIcon name="warn" size={20}/></span>
-            <div>
-              <h3 className="text-[13.5px] font-semibold text-d-red-fg m-0 mb-1">This action cannot be undone</h3>
-              <p className="text-[12.5px] text-d-fg-2 m-0 leading-normal">Deleting <strong>{accountName}</strong> removes the account, all users, billing history, audit log, and any uploaded data. Mail already in transit is unaffected.</p>
-            </div>
-          </div>
-          <Field label={<>Type the account name <strong className="text-d-fg">{accountName}</strong> to confirm</>}>
-            <Input placeholder="Account name" value={typed} onChange={e=>setTyped(e.target.value)}/>
-          </Field>
-        </>
-      )}
+      <div className="bg-d-bg-2 border border-d-border rounded-[10px] px-4 py-3.5">
+        <h4 className="text-sm font-semibold text-d-fg m-0 mb-2">What happens on deletion</h4>
+        <ul className="m-0 pl-4 text-xs text-d-fg-2 leading-relaxed flex flex-col gap-1">
+          <li>Account and user records anonymised (names, emails, contact details replaced)</li>
+          <li>Personal data, recipients, logs, files, and templates purged</li>
+          <li>Subscription expired and API keys revoked</li>
+          <li>Sub-accounts detached (continue as standalone)</li>
+          <li>Invoices and billing history kept for tax records</li>
+        </ul>
+      </div>
+
+      <Field label="Reason for deletion">
+        <textarea
+          className="font-sans bg-d-bg-2 border border-d-border-2 rounded-md text-d-fg px-3 py-2.5 text-sm w-full transition-[border-color,box-shadow] outline-none placeholder:text-d-fg-4 focus:border-indigo focus:ring-[3px] focus:ring-indigo/20 resize-y min-h-[72px]"
+          placeholder="e.g. Customer requested via CSM, GDPR erasure request..."
+          value={reason}
+          onChange={e=>setReason(e.target.value)}
+        />
+      </Field>
+
+      <Field label={<>Type the account name <strong className="text-d-fg">{accountName}</strong> to confirm</>}>
+        <Input placeholder="Account name" value={typed} onChange={e=>setTyped(e.target.value)}/>
+      </Field>
     </Modal>
   );
 };
+
+// ============================================================
+// 7b. Cancel Deletion (small confirm modal)
+// ============================================================
+export const CancelDeletionModal = ({ open, onClose, onConfirm, accountName }) => (
+  <Modal open={open} onClose={onClose} icon="x" title="Cancel deletion?"
+    subtitle={`This will return ${accountName} to active status. Users will be able to log in again.`}
+    width={460}
+    footer={<ModalFooter onCancel={onClose}
+      onConfirm={()=>{ onConfirm && onConfirm(); onClose(); }}
+      confirmLabel="Cancel deletion"
+      confirmVariant="indigo"/>}>
+    <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
+      <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Account</span><span className="text-d-fg font-medium">{accountName}</span></div>
+      <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">New status</span><span className="text-d-fg font-medium">Active</span></div>
+    </div>
+  </Modal>
+);
 
 // ============================================================
 // 8. Remove Sub-Account from Parent
@@ -436,17 +437,17 @@ export const RemoveSubAccountModal = ({ open, onClose, onConfirm, sub }) => {
             <div className="flex items-start gap-3 bg-d-bg-2 border border-d-border border-l-[3px] border-l-orange rounded-md px-3.5 py-3" key={i}>
               <span className="shrink-0 text-orange mt-px"><VaIcon name="warn" size={16}/></span>
               <div className="flex-1 min-w-0">
-                <h4 className="text-[13px] font-semibold text-d-fg m-0 mb-0.5">{b.title}</h4>
-                <p className="text-[12.5px] text-d-fg-3 m-0 leading-snug">{b.detail}</p>
+                <h4 className="text-sm font-semibold text-d-fg m-0 mb-0.5">{b.title}</h4>
+                <p className="text-xs text-d-fg-3 m-0 leading-snug">{b.detail}</p>
               </div>
             </div>
           ))}
         </div>
       ) : (
         <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
-          <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Sub-account</span><span className="text-d-fg font-medium">{sub.name}</span></div>
-          <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">Current balance</span><span className="text-d-fg font-medium">{sub.balance}</span></div>
-          <div className="flex justify-between gap-4 text-[13px]"><span className="text-d-fg-3">After removal</span><span className="text-d-fg font-medium">Becomes standalone account #{sub.id}</span></div>
+          <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Sub-account</span><span className="text-d-fg font-medium">{sub.name}</span></div>
+          <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">Current balance</span><span className="text-d-fg font-medium">{sub.balance}</span></div>
+          <div className="flex justify-between gap-4 text-sm"><span className="text-d-fg-3">After removal</span><span className="text-d-fg font-medium">Becomes standalone account #{sub.id}</span></div>
         </div>
       )}
     </Modal>
@@ -472,15 +473,15 @@ export const ChangePrimaryUserModal = ({ open, onClose, onConfirm, currentPrimar
           onConfirm={()=>{ onConfirm(sel); onClose(); }}
           confirmLabel="Confirm change"/>}>
         <div className="bg-d-bg-2 border border-d-border rounded-lg px-4 py-3.5 flex flex-col gap-2">
-          <div className="flex justify-between gap-4 text-[13px]">
+          <div className="flex justify-between gap-4 text-sm">
             <span className="text-d-fg-3">New primary user</span>
             <span className="text-d-fg font-medium">{sel.name} &middot; {sel.email}</span>
           </div>
-          <div className="flex justify-between gap-4 text-[13px]">
+          <div className="flex justify-between gap-4 text-sm">
             <span className="text-d-fg-3">Previous primary user</span>
             <span className="text-d-fg-3 font-medium">{currentPrimary.name} &rarr; Member</span>
           </div>
-          <div className="flex justify-between gap-4 text-[13px]">
+          <div className="flex justify-between gap-4 text-sm">
             <span className="text-d-fg-3">Both users notified by email</span>
             <span className="text-d-fg font-medium"><span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Yes</span></span>
           </div>
@@ -501,8 +502,8 @@ export const ChangePrimaryUserModal = ({ open, onClose, onConfirm, currentPrimar
         <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[10px] px-4 py-3.5 flex gap-3">
           <span className="shrink-0 text-d-red-fg"><VaIcon name="info" size={20}/></span>
           <div>
-            <h3 className="text-[13.5px] font-semibold text-d-fg m-0 mb-1">No other users on this account</h3>
-            <p className="text-[12.5px] text-d-fg-2 m-0 leading-normal">Add a user to this account first, then come back to reassign primary.</p>
+            <h3 className="text-sm font-semibold text-d-fg m-0 mb-1">No other users on this account</h3>
+            <p className="text-xs text-d-fg-2 m-0 leading-normal">Add a user to this account first, then come back to reassign primary.</p>
           </div>
         </div>
       ) : (
@@ -517,7 +518,7 @@ export const ChangePrimaryUserModal = ({ open, onClose, onConfirm, currentPrimar
               <span className="w-8 h-8 rounded-full bg-d-card-2 border border-d-border-2 inline-flex items-center justify-center text-xs font-semibold text-d-fg-2 shrink-0">{c.name.split(" ").map(s=>s[0]).slice(0,2).join("")}</span>
               <span className="flex-1 min-w-0">
                 <div className="text-sm font-medium text-d-fg">{c.name}</div>
-                <div className="text-[12.5px] text-d-fg-3">{c.email}</div>
+                <div className="text-xs text-d-fg-3">{c.email}</div>
               </span>
               <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug ${c.role === "Owner" ? "bg-d-indigo-bg text-d-indigo-fg" : "bg-d-neutral-bg text-d-neutral-fg"}`}>{c.role}</span>
               {c.mfa

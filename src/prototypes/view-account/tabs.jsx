@@ -49,12 +49,12 @@ export const CampaignsPanel = ({ campaigns }) => {
     <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
       <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
         <div>
-          <span className="text-[17px] font-semibold text-d-fg">Campaigns</span>
-          <span className="ml-2 text-d-fg-3 font-medium text-[13px]">{campaigns.length} &middot; 142 lifetime</span>
+          <span className="text-lg font-semibold text-d-fg">Campaigns</span>
+          <span className="ml-2 text-d-fg-3 font-medium text-sm">{campaigns.length} &middot; 142 lifetime</span>
         </div>
         <div className="flex gap-2">
-          <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">Export CSV</button>
-          <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110">
+          <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">Export CSV</button>
+          <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110">
             <VaIcon name="plus" size={13}/>
             New campaign
           </button>
@@ -68,17 +68,17 @@ export const CampaignsPanel = ({ campaigns }) => {
           </svg>
           <span>Search campaigns</span>
         </div>
-        <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-[12.5px] text-d-fg-2 cursor-pointer">
+        <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-xs text-d-fg-2 cursor-pointer">
           All formats
           <svg className="text-d-fg-3" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </span>
-        <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-[12.5px] text-d-fg-2 cursor-pointer">
+        <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-xs text-d-fg-2 cursor-pointer">
           All statuses
           <svg className="text-d-fg-3" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </span>
-        <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-[12.5px] text-d-fg-2 cursor-pointer">
+        <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-xs text-d-fg-2 cursor-pointer">
           Last 90 days
           <svg className="text-d-fg-3" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -100,14 +100,14 @@ export const CampaignsPanel = ({ campaigns }) => {
         <tbody>
           {campaigns.map((c, i) => (
             <tr key={i} className="hover:bg-d-bg-2 last:[&>td]:border-b-0">
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums text-d-fg-3">#{c.id}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle"><div className="font-medium">{c.name}</div></td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle">{c.format}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums text-right">{c.recipients}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums text-right font-medium">{c.cost}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle"><StatusPill status={c.status}/></td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle tabular-nums">{c.booked}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums text-d-fg-3">#{c.id}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle"><div className="font-medium">{c.name}</div></td>
+              <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle">{c.format}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums text-right">{c.recipients}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums text-right font-medium">{c.cost}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle"><StatusPill status={c.status}/></td>
+              <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle tabular-nums">{c.booked}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
                 <div className="flex gap-1.5 justify-end">
                   <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">View</button>
                   <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Duplicate</button>
@@ -152,10 +152,10 @@ export const TicketsPanel = ({ tickets }) => {
     <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
       <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
         <div>
-          <span className="text-[17px] font-semibold text-d-fg">Support tickets</span>
-          <span className="ml-2 text-d-fg-3 font-medium text-[13px]">{tickets.filter(t => t.status === "Open").length} open &middot; {tickets.length} total</span>
+          <span className="text-lg font-semibold text-d-fg">Support tickets</span>
+          <span className="ml-2 text-d-fg-3 font-medium text-sm">{tickets.filter(t => t.status === "Open").length} open &middot; {tickets.length} total</span>
         </div>
-        <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110">
+        <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110">
           <VaIcon name="plus" size={13}/>
           Raise ticket
         </button>
@@ -175,20 +175,20 @@ export const TicketsPanel = ({ tickets }) => {
         <tbody>
           {tickets.map((t, i) => (
             <tr key={i} className="hover:bg-d-bg-2 last:[&>td]:border-b-0">
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums text-d-fg-3">#{t.id}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums text-d-fg-3">#{t.id}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
                 <div className="font-medium">{t.subject}</div>
                 <div className="text-xs text-d-fg-3 mt-0.5">{t.lastMessage}</div>
               </td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle"><PriorityPill priority={t.priority}/></td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle"><PriorityPill priority={t.priority}/></td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
                 {t.status === "Open" && <StatusDotPill status="Open" variant="orange" />}
                 {t.status === "Pending" && <StatusDotPill status="Pending" variant="yellow" />}
                 {t.status === "Resolved" && <StatusDotPill status="Resolved" variant="green" />}
               </td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle">{t.assignedTo}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle">{t.updated}</td>
-              <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+              <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle">{t.assignedTo}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle">{t.updated}</td>
+              <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
                 <div className="flex gap-1.5 justify-end">
                   <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Open</button>
                 </div>
@@ -208,10 +208,10 @@ export const InvoicesPanel = ({ invoices }) => (
   <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
     <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
       <div>
-        <span className="text-[17px] font-semibold text-d-fg">Invoices</span>
-        <span className="ml-2 text-d-fg-3 font-medium text-[13px]">{invoices.length}</span>
+        <span className="text-lg font-semibold text-d-fg">Invoices</span>
+        <span className="ml-2 text-d-fg-3 font-medium text-sm">{invoices.length}</span>
       </div>
-      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">Export all</button>
+      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">Export all</button>
     </div>
     <table className="w-full border-collapse">
       <thead>
@@ -227,16 +227,16 @@ export const InvoicesPanel = ({ invoices }) => (
       <tbody>
         {invoices.map((inv, i) => (
           <tr key={i} className="hover:bg-d-bg-2 last:[&>td]:border-b-0">
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums font-medium">{inv.number}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle">{inv.issued}</td>
-            <td className={`px-6 py-3.5 text-[13.5px] border-b border-d-border align-middle ${inv.status === "Overdue" ? "text-d-red-fg" : "text-d-fg-2"}`}>{inv.due}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums text-right font-medium">{inv.amount}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums font-medium">{inv.number}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle">{inv.issued}</td>
+            <td className={`px-6 py-3.5 text-sm border-b border-d-border align-middle ${inv.status === "Overdue" ? "text-d-red-fg" : "text-d-fg-2"}`}>{inv.due}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums text-right font-medium">{inv.amount}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               {inv.status === "Paid" && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Paid</span>}
               {inv.status === "Pending" && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-yellow-bg text-d-yellow-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Pending</span>}
               {inv.status === "Overdue" && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-red-bg text-d-red-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Overdue</span>}
             </td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               <div className="flex gap-1.5 justify-end">
                 <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">PDF</button>
                 <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">View</button>
@@ -256,10 +256,10 @@ export const BillingAddressesPanel = ({ openModal }) => (
   <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
     <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
       <div>
-        <span className="text-[17px] font-semibold text-d-fg">Billing addresses</span>
-        <span className="ml-2 text-d-fg-3 font-medium text-[13px]">0</span>
+        <span className="text-lg font-semibold text-d-fg">Billing addresses</span>
+        <span className="ml-2 text-d-fg-3 font-medium text-sm">0</span>
       </div>
-      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110" onClick={()=>openModal("billingAddress")}>
+      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110" onClick={()=>openModal("billingAddress")}>
         <VaIcon name="plus" size={13}/>
         Add address
       </button>
@@ -289,8 +289,8 @@ export const BillingAddressesPanel = ({ openModal }) => (
     </table>
     <div className="px-6 py-14 flex flex-col items-center gap-3 text-d-fg-3">
       <VaIcon name="pin" size={32} stroke={1.4}/>
-      <div className="text-[15px] font-semibold text-d-fg">No billing addresses</div>
-      <div className="text-[13px]">This account has no billing addresses configured.</div>
+      <div className="text-base font-semibold text-d-fg">No billing addresses</div>
+      <div className="text-sm">This account has no billing addresses configured.</div>
     </div>
   </div>
 );
@@ -298,17 +298,21 @@ export const BillingAddressesPanel = ({ openModal }) => (
 // ============================================================
 // Users
 // ============================================================
-export const UsersPanel = ({ users, openModal, onMakePrimary }) => (
+export const UsersPanel = ({ users, openModal, onMakePrimary, isPending, isDeleted }) => (
   <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
     <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
-      <div>
-        <span className="text-[17px] font-semibold text-d-fg">Account users</span>
-        <span className="ml-2 text-d-fg-3 font-medium text-[13px]">{users.length} of 3</span>
+      <div className="flex items-center gap-3">
+        <span className="text-lg font-semibold text-d-fg">Account users</span>
+        <span className="text-d-fg-3 font-medium text-sm">{users.length} of 3</span>
+        {isPending && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-orange-bg text-d-orange-fg"><span className="w-1.5 h-1.5 rounded-full bg-current"/>Login blocked</span>}
+        {isDeleted && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-red-bg text-d-red-fg">Anonymised</span>}
       </div>
-      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110" onClick={()=>openModal("addUser")}>
-        <VaIcon name="plus" size={13}/>
-        Add user
-      </button>
+      {!isPending && !isDeleted && openModal && (
+        <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-orange text-white hover:brightness-110" onClick={()=>openModal("addUser")}>
+          <VaIcon name="plus" size={13}/>
+          Add user
+        </button>
+      )}
     </div>
     <div className="flex items-center gap-3 px-6 py-3.5 border-b border-d-border bg-d-bg-2">
       <div className="inline-flex items-center gap-2 bg-d-card border border-d-border px-3.5 py-2 rounded-lg text-d-fg-3 text-sm w-80">
@@ -333,7 +337,7 @@ export const UsersPanel = ({ users, openModal, onMakePrimary }) => (
       <tbody>
         {users.map((u, i) => (
           <tr key={i} className="hover:bg-d-bg-2 last:[&>td]:border-b-0">
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               <div className="flex items-center gap-2.5">
                 <div className="w-[30px] h-[30px] rounded-full bg-d-card-2 border border-d-border-2 inline-flex items-center justify-center text-[11px] font-semibold text-d-fg-2">{u.name.split(" ").map(s=>s[0]).slice(0,2).join("")}</div>
                 <div>
@@ -342,29 +346,31 @@ export const UsersPanel = ({ users, openModal, onMakePrimary }) => (
                 </div>
               </div>
             </td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">{u.email}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">{u.email}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug ${u.role === "Owner" ? "bg-d-indigo-bg text-d-indigo-fg" : "bg-d-neutral-bg text-d-neutral-fg"}`}>{u.role}</span>
             </td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               {u.mfa
                 ? <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Enabled</span>
                 : <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-neutral-bg text-d-fg-3">Off</span>}
             </td>
-            <td className={`px-6 py-3.5 text-[13.5px] border-b border-d-border align-middle ${u.lastLogin === "Never" ? "text-d-fg-3" : "text-d-fg"}`}>
+            <td className={`px-6 py-3.5 text-sm border-b border-d-border align-middle ${u.lastLogin === "Never" ? "text-d-fg-3" : "text-d-fg"}`}>
               {u.lastLogin}
             </td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
-              <div className="flex gap-1.5 justify-end">
-                <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Edit</button>
-                {!u.primary && (
-                  <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2"
-                    onClick={()=>onMakePrimary && onMakePrimary(u)}>
-                    Make primary
-                  </button>
-                )}
-                {!u.primary && <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-red-fg cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-red-bg hover:text-d-red-fg hover:border-[rgba(232,67,42,0.3)]">Remove</button>}
-              </div>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
+              {!isPending && !isDeleted && (
+                <div className="flex gap-1.5 justify-end">
+                  <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">Edit</button>
+                  {!u.primary && (
+                    <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2"
+                      onClick={()=>onMakePrimary && onMakePrimary(u)}>
+                      Make primary
+                    </button>
+                  )}
+                  {!u.primary && <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-red-fg cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-red-bg hover:text-d-red-fg hover:border-[rgba(232,67,42,0.3)]">Remove</button>}
+                </div>
+              )}
             </td>
           </tr>
         ))}
@@ -380,10 +386,10 @@ export const SubAccountsPanel = ({ subAccounts, openRemoveSub }) => (
   <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
     <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
       <div>
-        <span className="text-[17px] font-semibold text-d-fg">Sub-accounts</span>
-        <span className="ml-2 text-d-fg-3 font-medium text-[13px]">{subAccounts.length}</span>
+        <span className="text-lg font-semibold text-d-fg">Sub-accounts</span>
+        <span className="ml-2 text-d-fg-3 font-medium text-sm">{subAccounts.length}</span>
       </div>
-      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">
+      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">
         <VaIcon name="plus" size={13}/>
         Link sub-account
       </button>
@@ -402,16 +408,16 @@ export const SubAccountsPanel = ({ subAccounts, openRemoveSub }) => (
       <tbody>
         {subAccounts.map((s, i) => (
           <tr key={i} className="hover:bg-d-bg-2 last:[&>td]:border-b-0">
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle tabular-nums">{s.id}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle"><div className="font-medium">{s.name}</div></td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg-2 border-b border-d-border align-middle">{s.primaryUser}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle tabular-nums">{s.balance}</td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle tabular-nums">{s.id}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle"><div className="font-medium">{s.name}</div></td>
+            <td className="px-6 py-3.5 text-sm text-d-fg-2 border-b border-d-border align-middle">{s.primaryUser}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle tabular-nums">{s.balance}</td>
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               {s.status === "active" && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-green-bg text-d-green-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Active</span>}
               {s.status === "paused" && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-orange-bg text-d-orange-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Paused</span>}
               {s.status === "trial" && <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold leading-snug bg-d-yellow-bg text-d-yellow-fg"><span className="w-1.5 h-1.5 rounded-full bg-current" />Trial</span>}
             </td>
-            <td className="px-6 py-3.5 text-[13.5px] text-d-fg border-b border-d-border align-middle">
+            <td className="px-6 py-3.5 text-sm text-d-fg border-b border-d-border align-middle">
               <div className="flex gap-1.5 justify-end">
                 <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-fg-3 cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-card-2 hover:text-d-fg hover:border-d-border-2">View</button>
                 <button className="inline-flex items-center gap-1.5 bg-transparent border border-transparent text-d-red-fg cursor-pointer text-[11px] font-medium font-sans px-1.5 py-0.5 rounded-md transition-colors hover:bg-d-red-bg hover:text-d-red-fg hover:border-[rgba(232,67,42,0.3)]"
@@ -434,15 +440,15 @@ export const AuditLogPanel = ({ entries }) => (
   <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
     <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
       <div>
-        <span className="text-[17px] font-semibold text-d-fg">Audit log</span>
-        <span className="ml-2 text-d-fg-3 font-medium text-[13px]">{entries.length} entries</span>
+        <span className="text-lg font-semibold text-d-fg">Audit log</span>
+        <span className="ml-2 text-d-fg-3 font-medium text-sm">{entries.length} entries</span>
       </div>
-      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-[12.5px] border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">
+      <button className="inline-flex items-center gap-2 px-3 py-[7px] rounded-md font-sans font-semibold text-xs border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg">
         Export CSV
       </button>
     </div>
     <div className="flex items-center gap-2.5 px-6 py-3.5 border-b border-d-border bg-d-bg-2">
-      <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-[12.5px] text-d-fg-2 cursor-pointer">
+      <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-xs text-d-fg-2 cursor-pointer">
         <svg className="text-d-fg-3" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
@@ -453,7 +459,7 @@ export const AuditLogPanel = ({ entries }) => (
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </span>
-      <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-[12.5px] text-d-fg-2 cursor-pointer">
+      <span className="inline-flex items-center gap-1.5 bg-d-card border border-d-border-2 rounded-md px-2.5 py-1.5 text-xs text-d-fg-2 cursor-pointer">
         <svg className="text-d-fg-3" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M22 3H2l8 9v7l4 2v-9l8-9z"/>
@@ -464,20 +470,29 @@ export const AuditLogPanel = ({ entries }) => (
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </span>
-      <div className="ml-auto text-d-fg-3 text-[12.5px]">
+      <div className="ml-auto text-d-fg-3 text-xs">
         Most recent first &middot; Read-only
       </div>
     </div>
     <div className="px-6 pt-2 pb-4">
       {entries.map((e, i) => (
         <div className="grid grid-cols-[160px_220px_1fr] gap-4.5 items-baseline py-3.5 border-b border-d-border last:border-b-0" key={i}>
-          <span className="text-[12.5px] text-d-fg-3 tabular-nums">{e.time}</span>
-          <span className="flex items-center gap-2 text-[13px] text-d-fg-2">
+          <span className="text-xs text-d-fg-3 tabular-nums">{e.time}</span>
+          <span className="flex items-center gap-2 text-sm text-d-fg-2">
             <span className="w-[22px] h-[22px] rounded-full bg-d-card-2 border border-d-border-2 inline-flex items-center justify-center text-[10px] font-semibold text-d-fg-2">{e.who.split(" ").map(s=>s[0]).slice(0,2).join("")}</span>
             <span>{e.who}</span>
           </span>
-          <span className="text-[13px] text-d-fg-2 leading-normal">
-            {e.created ? (
+          <span className="text-sm text-d-fg-2 leading-normal">
+            {e.action === "marked-for-deletion" ? (
+              <><span className="inline-block px-2 py-px rounded bg-d-orange-bg text-d-orange-fg text-xs font-sans font-medium">Marked for deletion</span>
+                {e.detail && <span className="ml-2 text-d-fg-3">{e.detail}</span>}</>
+            ) : e.action === "cancelled-deletion" ? (
+              <><span className="inline-block px-2 py-px rounded bg-d-green-bg text-d-green-fg text-xs font-sans font-medium">Deletion cancelled</span>
+                {e.detail && <span className="ml-2 text-d-fg-3">{e.detail}</span>}</>
+            ) : e.action === "deleted" ? (
+              <><span className="inline-block px-2 py-px rounded bg-d-red-bg text-d-red-fg text-xs font-sans font-medium">Account deleted</span>
+                {e.detail && <span className="ml-2 text-d-fg-3">{e.detail}</span>}</>
+            ) : e.created ? (
               <>Created <span className="inline-block font-semibold text-d-fg">{e.field}</span>
                 {e.value && <> set to <span className="inline-block px-2 py-px rounded bg-d-green-bg text-d-green-fg text-xs font-sans font-medium">{e.value}</span></>}</>
             ) : e.deleted ? (
@@ -502,15 +517,15 @@ export const EmptyTabPanel = ({ title, hint }) => (
   <div className="bg-d-card border border-d-border rounded-xl overflow-hidden">
     <div className="flex items-center justify-between px-6 py-5 border-b border-d-border">
       <div>
-        <span className="text-[17px] font-semibold text-d-fg">{title}</span>
+        <span className="text-lg font-semibold text-d-fg">{title}</span>
       </div>
     </div>
     <div className="px-6 py-18 flex flex-col items-center gap-3 text-d-fg-3">
       <div className="w-12 h-12 rounded-xl bg-d-card-2 inline-flex items-center justify-center">
         <VaIcon name="info" size={22} stroke={1.5}/>
       </div>
-      <div className="text-[15px] font-semibold text-d-fg">Nothing here yet</div>
-      <div className="text-[13px]">{hint || "Records will show up here when there's activity."}</div>
+      <div className="text-base font-semibold text-d-fg">Nothing here yet</div>
+      <div className="text-sm">{hint || "Records will show up here when there's activity."}</div>
     </div>
   </div>
 );

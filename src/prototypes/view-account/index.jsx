@@ -15,6 +15,7 @@ import {
   EditBillingAddressModal,
   EditLowBalanceModal,
   DeleteAccountModal,
+  CancelDeletionModal,
   RemoveSubAccountModal,
   ChangePrimaryUserModal,
 } from './modals';
@@ -32,11 +33,12 @@ import {
 
 import TopOptionB from './top';
 
-// ===== Sample data =====
-const SEED = {
-  "deleteHasBlockers": true,
-  "subRemovalHasBlockers": false
-};
+// ===== Constants =====
+const SCENARIOS = [
+  { id: "active", label: "Active", dot: "#02B680" },
+  { id: "pending", label: "Pending deletion", dot: "#FF6900" },
+  { id: "deleted", label: "Deleted", dot: "#F87171" },
+];
 
 const TABS = [
   "Campaigns",
@@ -54,11 +56,32 @@ const TABS = [
   "Audit Log",
 ];
 
+const accountName = "Vivid Design Services Ltd.";
+
+// Anonymised replacement values
+const ANON = {
+  user: { name: "[Redacted User]", email: "deleted-89536@redacted.stannp.com", phone: "[Redacted]" },
+  users: [
+    { name: "[Redacted User]", email: "deleted-89536-1@redacted.stannp.com", role: "Owner", mfa: false, lastLogin: "N/A", primary: true },
+    { name: "[Redacted User]", email: "deleted-89536-2@redacted.stannp.com", role: "Member", mfa: false, lastLogin: "N/A" },
+    { name: "[Redacted User]", email: "deleted-89536-3@redacted.stannp.com", role: "Viewer", mfa: false, lastLogin: "N/A" },
+  ],
+  accountName: "[Deleted Account #89536]",
+  billingAddress: {
+    line1: "[Redacted]",
+    line2: "",
+    city: "[Redacted]",
+    postcode: "[Redacted]",
+    country: "United Kingdom",
+  },
+};
+
 const ViewAccountPrototype = () => {
   // ===== State =====
+  const [scenario, setScenario] = useState("active");
   const [activeTab, setActiveTab] = useState("Campaigns");
-  const [openModal, setOpenModal] = useState(null); // name of open modal
-  const [removeSub, setRemoveSub] = useState(null); // sub-account currently being removed
+  const [openModal, setOpenModal] = useState(null);
+  const [removeSub, setRemoveSub] = useState(null);
   const [toast, setToast] = useState(null);
 
   // Live account data (editable via modals)
@@ -97,7 +120,6 @@ const ViewAccountPrototype = () => {
   };
   const manager = "Becca Lee";
   const region = "United Kingdom";
-  const accountName = "Vivid Design Services Ltd.";
 
   const users = [
     { name: user.name, email: user.email, role: "Owner", mfa: mfa.enabled, lastLogin: user.lastLogin, primary: true },
@@ -136,7 +158,7 @@ const ViewAccountPrototype = () => {
     { number: "INV-2026-0142", issued: "25 Mar 2026", due: "08 Apr 2026", amount: "\u00a3140.00", status: "Paid" },
   ];
 
-  const auditEntries = [
+  const baseAuditEntries = [
     { time: "19 May 2026 \u00b7 14:32", who: "Becca Lee", field: "Account manager", from: "Sam Khan", to: "Becca Lee" },
     { time: "19 May 2026 \u00b7 14:30", who: "System", created: true, field: "Account", value: "89536" },
     { time: "17 May 2026 \u00b7 09:14", who: "Robert Moreton", field: "Primary email", from: "r.moreton@vivid.co.uk", to: "rmoreton@me.com" },
@@ -147,24 +169,44 @@ const ViewAccountPrototype = () => {
     { time: "08 May 2026 \u00b7 10:21", who: "System", deleted: true, field: "User", value: "j.smith@vivid.co.uk" },
   ];
 
-  const deleteBlockers = SEED.deleteHasBlockers ? [
-    { title: "Outstanding balance",
-      detail: "Account holds \u00a3128.00 across 1 sub-account. Refund or transfer the balance before deletion." },
-    { title: "Mail in transit",
-      detail: "2 campaigns are mid-production at the print partner and cannot be cancelled.",
-      items: ["Spring Catalogue #4821 \u2014 sealing today", "Loyalty refresh #4830 \u2014 at imposition"] },
-    { title: "Active automation journey",
-      detail: "1 journey is actively sending mail. Pause it before continuing.",
-      items: ["Welcome Series \u00b7 14 contacts in flight"] },
-  ] : [];
+  // Deletion-specific seed data
+  const deletionDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const deletionDateStr = deletionDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const deletedDateStr = "17 Sep 2026";
 
-  const subRemovalBlockers = SEED.subRemovalHasBlockers ? [
-    { title: "Mail in transit", detail: "1 campaign mid-production. Wait until it dispatches." },
-  ] : [];
+  // Audit entries vary by scenario
+  const auditEntries = useMemo(() => {
+    if (scenario === "pending") {
+      return [
+        { time: "24 Sep 2026 \u00b7 10:15", who: "Becca Lee", action: "marked-for-deletion", field: "Account", detail: "Customer requested deletion via CSM. GDPR erasure request." },
+        ...baseAuditEntries,
+      ];
+    }
+    if (scenario === "deleted") {
+      return [
+        { time: "24 Sep 2026 \u00b7 00:00", who: "System", action: "deleted", field: "Account", detail: "Account anonymised and data purged per scheduled deletion." },
+        { time: "17 Sep 2026 \u00b7 10:15", who: "Becca Lee", action: "marked-for-deletion", field: "Account", detail: "Customer requested deletion via CSM. GDPR erasure request." },
+        ...baseAuditEntries,
+      ];
+    }
+    return baseAuditEntries;
+  }, [scenario]);
+
+  const isDeleted = scenario === "deleted";
+  const isPending = scenario === "pending";
+
+  // What data to show based on state
+  const displayAccountName = isDeleted ? ANON.accountName : accountName;
+  const displayUsers = isDeleted ? ANON.users : users;
+  const displayUser = isDeleted ? { ...ANON.user, prefs: { product: false, marketing: false, account: false }, lastLogin: "N/A" } : user;
+  const displayBillingAddress = isDeleted ? ANON.billingAddress : billingAddress;
+  const displayMfa = isDeleted ? { enabled: false, lastVerified: "\u2014" } : mfa;
+
+  const subRemovalBlockers = [];
 
   // ===== Handlers =====
   const close = () => setOpenModal(null);
-  const showToast = (m) => { setToast(m); setTimeout(()=>setToast(null), 2400); };
+  const showToast = (m) => { setToast(m); setTimeout(()=>setToast(null), 3000); };
 
   const onSaveUser = (u) => { setUser(prev => ({ ...prev, ...u })); showToast("User details updated"); };
   const onResetPw = () => { close(); showToast("Password reset email sent"); };
@@ -172,7 +214,14 @@ const ViewAccountPrototype = () => {
   const onAddUser = (u) => showToast(`Invitation sent to ${u.email}`);
   const onSaveAddress = (a) => { setBillingAddress(a); showToast("Billing address saved"); };
   const onSaveLowBalance = (lb) => { setLowBalance(lb); showToast("Low-balance settings saved"); };
-  const onDeleteAccount = () => showToast("Account scheduled for deletion");
+  const onDeleteAccount = ({ deletionDate: delDate }) => {
+    showToast(`Account marked for deletion. It will be deleted on ${delDate}.`);
+    setScenario("pending");
+  };
+  const onCancelDeletion = () => {
+    showToast("Deletion cancelled. Account returned to active.");
+    setScenario("active");
+  };
   const onRemoveSub = () => showToast(`${removeSub.name} unlinked`);
   const onChangePrimary = (newPrimary) => {
     setUser({
@@ -192,26 +241,90 @@ const ViewAccountPrototype = () => {
       case "Campaigns": return <CampaignsPanel campaigns={campaigns}/>;
       case "Support Tickets": return <TicketsPanel tickets={tickets}/>;
       case "Invoices": return <InvoicesPanel invoices={invoices}/>;
-      case "Users": return <UsersPanel users={users} openModal={setOpenModal} onMakePrimary={onMakePrimaryFromTab}/>;
-      case "Sub-Accounts": return <SubAccountsPanel subAccounts={subAccounts}
-        openRemoveSub={(s)=>{ setRemoveSub({ ...s, blockers: subRemovalBlockers }); setOpenModal("removeSub"); }}/>;
-      case "Billing Addresses": return <BillingAddressesPanel openModal={setOpenModal}/>;
+      case "Users": return <UsersPanel users={displayUsers} openModal={isDeleted || isPending ? null : setOpenModal} onMakePrimary={isDeleted || isPending ? null : onMakePrimaryFromTab} isPending={isPending} isDeleted={isDeleted}/>;
+      case "Sub-Accounts": return <SubAccountsPanel subAccounts={isDeleted ? [] : subAccounts}
+        openRemoveSub={isDeleted || isPending ? null : (s)=>{ setRemoveSub({ ...s, blockers: subRemovalBlockers }); setOpenModal("removeSub"); }}/>;
+      case "Billing Addresses": return <BillingAddressesPanel openModal={isDeleted || isPending ? null : setOpenModal}/>;
       case "Audit Log": return <AuditLogPanel entries={auditEntries}/>;
       default: return <EmptyTabPanel title={activeTab}/>;
     }
-  }, [activeTab, users, subAccounts, auditEntries, campaigns, tickets, invoices]);
+  }, [activeTab, displayUsers, subAccounts, auditEntries, campaigns, tickets, invoices, scenario]);
 
   return (
     <div className="font-sans text-d-fg bg-d-bg antialiased" data-screen-label="Account view">
-      <ScenarioBar note="Account detail page — admin view with tabs, modals, and audit log" />
+      <ScenarioBar
+        scenarios={SCENARIOS}
+        scenario={scenario}
+        onChange={setScenario}
+        note="Account detail page with deletion states"
+      />
       <div className="grid grid-cols-[264px_1fr] min-h-full bg-d-bg">
       <TopBar />
       <SideNav />
       <main className="px-8 pt-6 pb-10">
-          <PageHead onDelete={()=>setOpenModal("delete")} />
+          <PageHead onDelete={!isDeleted && !isPending ? ()=>setOpenModal("delete") : null} />
+
+          {/* Pending deletion banner */}
+          {isPending && (
+            <div className="bg-d-orange-bg border border-[rgba(255,105,0,0.3)] rounded-[14px] px-6 py-5 mb-5 flex items-start gap-4">
+              <span className="shrink-0 mt-0.5 text-d-orange-fg">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                </svg>
+              </span>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-d-orange-fg m-0 mb-1">Pending deletion</h3>
+                <p className="text-sm text-d-fg-2 m-0 leading-relaxed">
+                  Scheduled for deletion on <strong className="text-d-fg">{deletionDateStr}</strong>. Marked by <strong className="text-d-fg">Becca Lee</strong> on 24 Sep 2026 at 10:15.
+                </p>
+                <p className="text-sm text-d-fg-3 m-0 mt-1">
+                  Reason: Customer requested deletion via CSM. GDPR erasure request.
+                </p>
+                <p className="text-xs text-d-fg-3 m-0 mt-2">
+                  Users are blocked from logging in. The account manager can cancel before the deletion date.
+                </p>
+              </div>
+              <button
+                className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-md font-sans font-semibold text-sm border border-transparent cursor-pointer transition-[filter,background] bg-d-card text-d-fg-2 border-d-border-2 hover:bg-d-card-hover hover:text-d-fg"
+                onClick={()=>setOpenModal("cancelDeletion")}
+              >
+                Cancel deletion
+              </button>
+            </div>
+          )}
+
+          {/* Deleted banner */}
+          {isDeleted && (
+            <div className="bg-d-red-bg border border-[rgba(232,67,42,0.3)] rounded-[14px] px-6 py-5 mb-5 flex items-start gap-4">
+              <span className="shrink-0 mt-0.5 text-d-red-fg">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6"/>
+                </svg>
+              </span>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-d-red-fg m-0 mb-1">Account deleted</h3>
+                <p className="text-sm text-d-fg-2 m-0 leading-relaxed">
+                  Deleted on <strong className="text-d-fg">{deletedDateStr}</strong>. Account and user records have been anonymised. Personal data has been purged. Invoices and billing history are preserved for tax records.
+                </p>
+              </div>
+            </div>
+          )}
+
           <TopOptionB
-            data={{ user, manager, region, billingAddress, lowBalance, mfa, system, paymentMethods }}
-            openModal={setOpenModal}/>
+            data={{
+              user: displayUser,
+              manager,
+              region,
+              billingAddress: displayBillingAddress,
+              lowBalance: isDeleted ? { enabled: false } : lowBalance,
+              mfa: displayMfa,
+              system,
+              paymentMethods: isDeleted ? [] : paymentMethods,
+              accountName: displayAccountName,
+            }}
+            openModal={isDeleted || isPending ? ()=>{} : setOpenModal}
+            disabled={isDeleted || isPending}
+          />
 
           <TabStrip tabs={TABS} active={activeTab} onChange={setActiveTab}/>
           {tabContent}
@@ -232,8 +345,11 @@ const ViewAccountPrototype = () => {
       <EditLowBalanceModal open={openModal === "lowBalance"} onClose={close}
         lowBalance={lowBalance} onSave={onSaveLowBalance}/>
       <DeleteAccountModal open={openModal === "delete"} onClose={close}
-        accountName={accountName} blockers={deleteBlockers}
+        accountName={accountName}
         onConfirm={onDeleteAccount}/>
+      <CancelDeletionModal open={openModal === "cancelDeletion"} onClose={close}
+        accountName={accountName}
+        onConfirm={onCancelDeletion}/>
       <RemoveSubAccountModal open={openModal === "removeSub"} onClose={close}
         sub={removeSub} onConfirm={onRemoveSub}/>
       <ChangePrimaryUserModal open={openModal === "changePrimary"} onClose={close}
@@ -249,9 +365,9 @@ const ViewAccountPrototype = () => {
 ViewAccountPrototype.meta = {
   id: 'view-account',
   label: 'View Account',
-  description: 'Account detail page — admin view with tabs, modals, and audit log',
+  description: 'Account detail page with deletion states: active, pending, deleted',
   path: '/view-account',
-  status: 'idea',
+  status: 'wip',
 };
 
 export default ViewAccountPrototype;

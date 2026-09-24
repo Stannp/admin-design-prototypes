@@ -31,7 +31,7 @@ const TopBar = () => (
           <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/>
         </svg>
       </span>
-      <span className="w-9 h-9 rounded-full bg-d-card-2 border border-d-border-2 text-d-fg font-semibold text-[13px] inline-flex items-center justify-center">JC</span>
+      <span className="w-9 h-9 rounded-full bg-d-card-2 border border-d-border-2 text-d-fg font-semibold text-sm inline-flex items-center justify-center">JC</span>
     </div>
   </div>
 );
