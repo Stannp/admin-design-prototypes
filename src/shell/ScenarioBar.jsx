@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function ScenarioBar({ scenarios, scenario, onChange, note }) {
+// `children` is an optional slot after the persona pills, for prototype-specific controls.
+export default function ScenarioBar({ scenarios, scenario, onChange, note, children }) {
   const navigate = useNavigate();
   const current = scenarios?.find(s => s.id === scenario);
   const displayNote = note || current?.note;
@@ -24,6 +25,7 @@ export default function ScenarioBar({ scenarios, scenario, onChange, note }) {
           ))}
         </>
       )}
+      {children}
       {displayNote && <span className="ml-auto font-medium text-[11px] leading-snug text-white/45 italic max-w-80 text-right">{displayNote}</span>}
     </div>
   );

@@ -26,10 +26,10 @@ import TopBar from '../../shell/TopBar';
 ```
 
 ### SideNav
-Sidebar navigation with grouped items. The active item is hardcoded to "Accounts".
+Sidebar navigation with grouped items. `active` takes an item label and defaults to "Accounts".
 ```jsx
 import SideNav from '../../shell/SideNav';
-<SideNav />
+<SideNav active="Dashboard" />
 ```
 
 ### PageHead

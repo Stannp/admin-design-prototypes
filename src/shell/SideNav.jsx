@@ -29,8 +29,8 @@ const SideIcon = ({ name }) => {
   );
 };
 
-const SideNav = () => {
-  const Item = ({ icon, label, active }) => (
+const SideNav = ({ active: current = "Accounts" }) => {
+  const Item = ({ icon, label, active = label === current }) => (
     <div className={"flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium cursor-pointer transition-colors" + (active ? " bg-d-card text-d-fg" : " text-d-fg-2 hover:bg-d-card hover:text-d-fg")}>
       <span className={"inline-flex" + (active ? " text-yellow" : " text-d-fg-3")}><SideIcon name={icon}/></span>
       <span>{label}</span>
@@ -58,7 +58,7 @@ const SideNav = () => {
         <Item icon="kpi" label="KPI Report"/>
       </Group>
       <Group title="Customers">
-        <Item icon="building" label="Accounts" active/>
+        <Item icon="building" label="Accounts"/>
         <Item icon="users" label="Users"/>
         <Item icon="ticket" label="Tickets"/>
         <Item icon="flag" label="Milestones"/>
