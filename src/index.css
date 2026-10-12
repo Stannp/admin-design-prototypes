@@ -52,6 +52,10 @@
   from { transform: translateY(8px) scale(0.98); opacity: 0; }
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
+@keyframes va-row-new {
+  from { background: rgba(65, 93, 229, 0.22); }
+  to { background: transparent; }
+}
 @keyframes va-toast-in {
   from { transform: translate(-50%, 16px); opacity: 0; }
   to { transform: translate(-50%, 0); opacity: 1; }
